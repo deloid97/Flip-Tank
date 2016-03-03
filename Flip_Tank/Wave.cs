@@ -34,18 +34,18 @@ namespace Flip_Tank
             int chance4 = chance3 + flyShld;
             
             //loop builds the enemy wave
-            for (int i = 0; i < waveRoster.Length; i++)
+            for (int i = 0; i < WaveRoster.Length; i++)
             {
                 int chance = rng.Next(chance4);
 
                 if (chance < chance1 && chance >= 0)
-                    waveRoster[i] = new Ground();
+                    WaveRoster[i] = new Ground();
                 if (chance < chance2 && chance >= chance1)
-                    waveRoster[i] = new Flyer();
+                    WaveRoster[i] = new Flyer();
                 if (chance < chance3 && chance >= chance2)
-                    waveRoster[i] = new GroundShield();
+                    WaveRoster[i] = new GroundShield();
                 if (chance < chance4 && chance >= chance3)
-                    waveRoster[i] = new FlyerShield();
+                    WaveRoster[i] = new FlyerShield();
             }
         }
 
@@ -56,8 +56,15 @@ namespace Flip_Tank
         private int flyShld;
         private int onScreen;
         private Random rng;
-        private Enemy[] waveRoster; //stores all the enemies in the wave
+        Enemy[] waveRoster; //stores all the enemies in the wave
 
-
+        //Property for the WaveRoster so that methods for each enemy can be called in the Game
+        public Enemy[] WaveRoster
+        {
+            get
+            {
+                return waveRoster;
+            }
+        }
     }
 }
