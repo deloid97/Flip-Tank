@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 namespace Flip_Tank
 {
@@ -12,14 +11,6 @@ namespace Flip_Tank
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        //Enumeration for game states
-        enum GameState { Menu, Game, GameOver};
-        GameState gameState; //Holds the current game state
-
-        //Need some way to get all active bullets on screen and have it shared between classes. Flyers and Player need to add to this list and collisions need to be checked using it
-
-
 
         public Game1()
         {
