@@ -9,6 +9,9 @@ namespace Flip_Tank
     /// </summary>
     public class Game1 : Game
     {
+        enum GameState { Menu, InWave, EndWave, GameOver };
+        GameState gameState;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
