@@ -31,13 +31,13 @@
             this.RestartButton = new System.Windows.Forms.Button();
             this.WaveGroup = new System.Windows.Forms.GroupBox();
             this.OnScreenBox = new System.Windows.Forms.MaskedTextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.LabelOnScreen = new System.Windows.Forms.Label();
+            this.LabelNumEnemy = new System.Windows.Forms.Label();
             this.NumEnemiesBox = new System.Windows.Forms.MaskedTextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LabelShieldFlyer = new System.Windows.Forms.Label();
+            this.LabelShieldGround = new System.Windows.Forms.Label();
+            this.LabelFlyer = new System.Windows.Forms.Label();
+            this.LabelGround = new System.Windows.Forms.Label();
             this.EnemySpawnGroup = new System.Windows.Forms.GroupBox();
             this.SFlyerChanceBox = new System.Windows.Forms.MaskedTextBox();
             this.FlyerChanceBox = new System.Windows.Forms.MaskedTextBox();
@@ -48,9 +48,9 @@
             this.JumpBox = new System.Windows.Forms.MaskedTextBox();
             this.SpeedBox = new System.Windows.Forms.MaskedTextBox();
             this.HealthBox = new System.Windows.Forms.MaskedTextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.LabelJump = new System.Windows.Forms.Label();
+            this.LabelSpeed = new System.Windows.Forms.Label();
+            this.LabelHealth = new System.Windows.Forms.Label();
             this.WaveGroup.SuspendLayout();
             this.EnemySpawnGroup.SuspendLayout();
             this.PlayerGroup.SuspendLayout();
@@ -62,7 +62,7 @@
             this.RestartButton.Location = new System.Drawing.Point(210, 322);
             this.RestartButton.Name = "RestartButton";
             this.RestartButton.Size = new System.Drawing.Size(119, 54);
-            this.RestartButton.TabIndex = 10;
+            this.RestartButton.TabIndex = 4;
             this.RestartButton.Text = "Restart Game";
             this.RestartButton.UseVisualStyleBackColor = true;
             this.RestartButton.Click += new System.EventHandler(this.RestartButton_Click);
@@ -70,8 +70,8 @@
             // WaveGroup
             // 
             this.WaveGroup.Controls.Add(this.OnScreenBox);
-            this.WaveGroup.Controls.Add(this.label6);
-            this.WaveGroup.Controls.Add(this.label5);
+            this.WaveGroup.Controls.Add(this.LabelOnScreen);
+            this.WaveGroup.Controls.Add(this.LabelNumEnemy);
             this.WaveGroup.Controls.Add(this.NumEnemiesBox);
             this.WaveGroup.Location = new System.Drawing.Point(12, 5);
             this.WaveGroup.Name = "WaveGroup";
@@ -86,77 +86,79 @@
             this.OnScreenBox.Mask = "00000";
             this.OnScreenBox.Name = "OnScreenBox";
             this.OnScreenBox.Size = new System.Drawing.Size(100, 20);
-            this.OnScreenBox.TabIndex = 0;
+            this.OnScreenBox.TabIndex = 3;
             this.OnScreenBox.ValidatingType = typeof(int);
             // 
-            // label6
+            // LabelOnScreen
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 90);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 16);
-            this.label6.TabIndex = 786;
-            this.label6.Text = "Max on Screen";
+            this.LabelOnScreen.AutoSize = true;
+            this.LabelOnScreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelOnScreen.Location = new System.Drawing.Point(6, 90);
+            this.LabelOnScreen.Name = "LabelOnScreen";
+            this.LabelOnScreen.Size = new System.Drawing.Size(97, 16);
+            this.LabelOnScreen.TabIndex = 2;
+            this.LabelOnScreen.Text = "Max on Screen";
             // 
-            // label5
+            // LabelNumEnemy
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 28);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 16);
-            this.label5.TabIndex = 757;
-            this.label5.Text = "# of Enemies";
+            this.LabelNumEnemy.AutoSize = true;
+            this.LabelNumEnemy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelNumEnemy.Location = new System.Drawing.Point(6, 28);
+            this.LabelNumEnemy.Name = "LabelNumEnemy";
+            this.LabelNumEnemy.Size = new System.Drawing.Size(85, 16);
+            this.LabelNumEnemy.TabIndex = 0;
+            this.LabelNumEnemy.Text = "# of Enemies";
             // 
             // NumEnemiesBox
             // 
+            this.NumEnemiesBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.NumEnemiesBox.Location = new System.Drawing.Point(9, 47);
             this.NumEnemiesBox.Mask = "00000";
             this.NumEnemiesBox.Name = "NumEnemiesBox";
             this.NumEnemiesBox.Size = new System.Drawing.Size(100, 20);
-            this.NumEnemiesBox.TabIndex = 0;
+            this.NumEnemiesBox.TabIndex = 1;
+            this.NumEnemiesBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.NumEnemiesBox.ValidatingType = typeof(int);
             // 
-            // label4
+            // LabelShieldFlyer
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(189, 90);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(144, 16);
-            this.label4.TabIndex = 369;
-            this.label4.Text = "Shielded Flyer Chance";
+            this.LabelShieldFlyer.AutoSize = true;
+            this.LabelShieldFlyer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelShieldFlyer.Location = new System.Drawing.Point(189, 90);
+            this.LabelShieldFlyer.Name = "LabelShieldFlyer";
+            this.LabelShieldFlyer.Size = new System.Drawing.Size(144, 16);
+            this.LabelShieldFlyer.TabIndex = 6;
+            this.LabelShieldFlyer.Text = "Shielded Flyer Chance";
             // 
-            // label3
+            // LabelShieldGround
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(158, 16);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "Shielded Ground Chance";
+            this.LabelShieldGround.AutoSize = true;
+            this.LabelShieldGround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelShieldGround.Location = new System.Drawing.Point(3, 90);
+            this.LabelShieldGround.Name = "LabelShieldGround";
+            this.LabelShieldGround.Size = new System.Drawing.Size(158, 16);
+            this.LabelShieldGround.TabIndex = 4;
+            this.LabelShieldGround.Text = "Shielded Ground Chance";
             // 
-            // label2
+            // LabelFlyer
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(189, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 16);
-            this.label2.TabIndex = 178;
-            this.label2.Text = "Flyer Chance";
+            this.LabelFlyer.AutoSize = true;
+            this.LabelFlyer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelFlyer.Location = new System.Drawing.Point(189, 28);
+            this.LabelFlyer.Name = "LabelFlyer";
+            this.LabelFlyer.Size = new System.Drawing.Size(87, 16);
+            this.LabelFlyer.TabIndex = 2;
+            this.LabelFlyer.Text = "Flyer Chance";
             // 
-            // label1
+            // LabelGround
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 16);
-            this.label1.TabIndex = 46;
-            this.label1.Text = "Ground Chance";
+            this.LabelGround.AutoSize = true;
+            this.LabelGround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelGround.Location = new System.Drawing.Point(3, 28);
+            this.LabelGround.Name = "LabelGround";
+            this.LabelGround.Size = new System.Drawing.Size(101, 16);
+            this.LabelGround.TabIndex = 0;
+            this.LabelGround.Text = "Ground Chance";
             // 
             // EnemySpawnGroup
             // 
@@ -164,14 +166,14 @@
             this.EnemySpawnGroup.Controls.Add(this.FlyerChanceBox);
             this.EnemySpawnGroup.Controls.Add(this.GroundChanceBox);
             this.EnemySpawnGroup.Controls.Add(this.SGroundChanceBox);
-            this.EnemySpawnGroup.Controls.Add(this.label1);
-            this.EnemySpawnGroup.Controls.Add(this.label4);
-            this.EnemySpawnGroup.Controls.Add(this.label3);
-            this.EnemySpawnGroup.Controls.Add(this.label2);
+            this.EnemySpawnGroup.Controls.Add(this.LabelGround);
+            this.EnemySpawnGroup.Controls.Add(this.LabelShieldFlyer);
+            this.EnemySpawnGroup.Controls.Add(this.LabelShieldGround);
+            this.EnemySpawnGroup.Controls.Add(this.LabelFlyer);
             this.EnemySpawnGroup.Location = new System.Drawing.Point(168, 5);
             this.EnemySpawnGroup.Name = "EnemySpawnGroup";
             this.EnemySpawnGroup.Size = new System.Drawing.Size(346, 141);
-            this.EnemySpawnGroup.TabIndex = 3;
+            this.EnemySpawnGroup.TabIndex = 1;
             this.EnemySpawnGroup.TabStop = false;
             this.EnemySpawnGroup.Text = "Enemy Spawn Chance";
             // 
@@ -181,7 +183,7 @@
             this.SFlyerChanceBox.Mask = "00000";
             this.SFlyerChanceBox.Name = "SFlyerChanceBox";
             this.SFlyerChanceBox.Size = new System.Drawing.Size(100, 20);
-            this.SFlyerChanceBox.TabIndex = 6;
+            this.SFlyerChanceBox.TabIndex = 7;
             this.SFlyerChanceBox.ValidatingType = typeof(int);
             // 
             // FlyerChanceBox
@@ -190,7 +192,7 @@
             this.FlyerChanceBox.Mask = "00000";
             this.FlyerChanceBox.Name = "FlyerChanceBox";
             this.FlyerChanceBox.Size = new System.Drawing.Size(100, 20);
-            this.FlyerChanceBox.TabIndex = 5;
+            this.FlyerChanceBox.TabIndex = 3;
             this.FlyerChanceBox.ValidatingType = typeof(int);
             // 
             // GroundChanceBox
@@ -199,7 +201,7 @@
             this.GroundChanceBox.Mask = "00000";
             this.GroundChanceBox.Name = "GroundChanceBox";
             this.GroundChanceBox.Size = new System.Drawing.Size(100, 20);
-            this.GroundChanceBox.TabIndex = 3;
+            this.GroundChanceBox.TabIndex = 1;
             this.GroundChanceBox.ValidatingType = typeof(int);
             // 
             // SGroundChanceBox
@@ -208,7 +210,7 @@
             this.SGroundChanceBox.Mask = "00000";
             this.SGroundChanceBox.Name = "SGroundChanceBox";
             this.SGroundChanceBox.Size = new System.Drawing.Size(100, 20);
-            this.SGroundChanceBox.TabIndex = 4;
+            this.SGroundChanceBox.TabIndex = 5;
             this.SGroundChanceBox.ValidatingType = typeof(int);
             // 
             // RandSpawnButton
@@ -227,13 +229,13 @@
             this.PlayerGroup.Controls.Add(this.JumpBox);
             this.PlayerGroup.Controls.Add(this.SpeedBox);
             this.PlayerGroup.Controls.Add(this.HealthBox);
-            this.PlayerGroup.Controls.Add(this.label9);
-            this.PlayerGroup.Controls.Add(this.label8);
-            this.PlayerGroup.Controls.Add(this.label7);
+            this.PlayerGroup.Controls.Add(this.LabelJump);
+            this.PlayerGroup.Controls.Add(this.LabelSpeed);
+            this.PlayerGroup.Controls.Add(this.LabelHealth);
             this.PlayerGroup.Location = new System.Drawing.Point(14, 151);
             this.PlayerGroup.Name = "PlayerGroup";
             this.PlayerGroup.Size = new System.Drawing.Size(307, 136);
-            this.PlayerGroup.TabIndex = 89;
+            this.PlayerGroup.TabIndex = 2;
             this.PlayerGroup.TabStop = false;
             this.PlayerGroup.Text = "Player Values";
             // 
@@ -243,7 +245,7 @@
             this.JumpBox.Mask = "00000";
             this.JumpBox.Name = "JumpBox";
             this.JumpBox.Size = new System.Drawing.Size(100, 20);
-            this.JumpBox.TabIndex = 9;
+            this.JumpBox.TabIndex = 5;
             this.JumpBox.ValidatingType = typeof(int);
             // 
             // SpeedBox
@@ -252,7 +254,7 @@
             this.SpeedBox.Mask = "00000";
             this.SpeedBox.Name = "SpeedBox";
             this.SpeedBox.Size = new System.Drawing.Size(100, 20);
-            this.SpeedBox.TabIndex = 8;
+            this.SpeedBox.TabIndex = 3;
             this.SpeedBox.ValidatingType = typeof(int);
             // 
             // HealthBox
@@ -261,38 +263,38 @@
             this.HealthBox.Mask = "00000";
             this.HealthBox.Name = "HealthBox";
             this.HealthBox.Size = new System.Drawing.Size(100, 20);
-            this.HealthBox.TabIndex = 7;
+            this.HealthBox.TabIndex = 1;
             this.HealthBox.ValidatingType = typeof(int);
             // 
-            // label9
+            // LabelJump
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(6, 97);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(83, 16);
-            this.label9.TabIndex = 89;
-            this.label9.Text = "Jump Height";
+            this.LabelJump.AutoSize = true;
+            this.LabelJump.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelJump.Location = new System.Drawing.Point(6, 97);
+            this.LabelJump.Name = "LabelJump";
+            this.LabelJump.Size = new System.Drawing.Size(83, 16);
+            this.LabelJump.TabIndex = 4;
+            this.LabelJump.Text = "Jump Height";
             // 
-            // label8
+            // LabelSpeed
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 63);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 16);
-            this.label8.TabIndex = 7575;
-            this.label8.Text = "Speed";
+            this.LabelSpeed.AutoSize = true;
+            this.LabelSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelSpeed.Location = new System.Drawing.Point(6, 63);
+            this.LabelSpeed.Name = "LabelSpeed";
+            this.LabelSpeed.Size = new System.Drawing.Size(49, 16);
+            this.LabelSpeed.TabIndex = 2;
+            this.LabelSpeed.Text = "Speed";
             // 
-            // label7
+            // LabelHealth
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 30);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 16);
-            this.label7.TabIndex = 420;
-            this.label7.Text = "Health";
+            this.LabelHealth.AutoSize = true;
+            this.LabelHealth.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelHealth.Location = new System.Drawing.Point(6, 30);
+            this.LabelHealth.Name = "LabelHealth";
+            this.LabelHealth.Size = new System.Drawing.Size(47, 16);
+            this.LabelHealth.TabIndex = 0;
+            this.LabelHealth.Text = "Health";
             // 
             // GameBalanceTool
             // 
@@ -322,12 +324,12 @@
 
         private System.Windows.Forms.Button RestartButton;
         private System.Windows.Forms.GroupBox WaveGroup;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label LabelShieldFlyer;
+        private System.Windows.Forms.Label LabelShieldGround;
+        private System.Windows.Forms.Label LabelFlyer;
+        private System.Windows.Forms.Label LabelGround;
+        private System.Windows.Forms.Label LabelOnScreen;
+        private System.Windows.Forms.Label LabelNumEnemy;
         private System.Windows.Forms.GroupBox EnemySpawnGroup;
         private System.Windows.Forms.Button RandSpawnButton;
         private System.Windows.Forms.GroupBox PlayerGroup;
@@ -340,8 +342,8 @@
         private System.Windows.Forms.MaskedTextBox JumpBox;
         private System.Windows.Forms.MaskedTextBox SpeedBox;
         private System.Windows.Forms.MaskedTextBox HealthBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label LabelJump;
+        private System.Windows.Forms.Label LabelSpeed;
+        private System.Windows.Forms.Label LabelHealth;
     }
 }

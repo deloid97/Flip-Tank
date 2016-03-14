@@ -32,6 +32,12 @@ namespace Flip_Tank
             WaveGroup.TabStop = true;
             EnemySpawnGroup.TabStop = true;
             PlayerGroup.TabStop = true;
+
+
+            //Default Values
+            HealthBox.Text = "100";
+            SpeedBox.Text = "5";
+            JumpBox.Text = "10";
         }
 
 
@@ -42,6 +48,9 @@ namespace Flip_Tank
         /// <param name="e"></param>
         private void RestartButton_Click(object sender, EventArgs e)
         {
+
+            //Send player to main menu to restart
+
             /*
             TEXT FILE FORMAT:
 
