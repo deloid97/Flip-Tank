@@ -42,6 +42,12 @@
     <Compile Include="Flyer.cs" />
     <Compile Include="FlyerShield.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameBalanceTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameBalanceTool.Designer.cs">
+      <DependentUpon>GameBalanceTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ground.cs" />
     <Compile Include="GroundShield.cs" />
     <Compile Include="Player.cs" />
@@ -57,6 +63,9 @@
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\WindowsGL\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GameBalanceTool.resx">
+      <DependentUpon>GameBalanceTool.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">

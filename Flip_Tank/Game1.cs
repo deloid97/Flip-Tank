@@ -33,6 +33,12 @@ namespace Flip_Tank
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+            /*
+            Starts the Developer Tool
+
+            GameBalanceTool gameBalance = new GameBalanceTool();
+            gameBalance.Show();
+            */
         }
 
         /// <summary>
