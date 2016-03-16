@@ -9,6 +9,8 @@ namespace Flip_Tank
     /// </summary>
     public class Game1 : Game
     {
+        Player p1 = new Player(0,0,70,70); //creates player object
+
         enum GameState { Menu, InWave, EndWave, GameOver };
         GameState gameState;
 
@@ -30,7 +32,6 @@ namespace Flip_Tank
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -42,6 +43,8 @@ namespace Flip_Tank
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            p1.texture = Content.Load<Texture2D>("Tank");   //gives player texture
 
             // TODO: use this.Content to load your game content here
         }
@@ -67,6 +70,7 @@ namespace Flip_Tank
 
             // TODO: Add your update logic here
 
+            p1.Movement();
             base.Update(gameTime);
         }
 
@@ -79,7 +83,12 @@ namespace Flip_Tank
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
 
+            //if(gameState == GameState.InWave)
+            spriteBatch.Draw(p1.texture, p1.position, Color.White); //draws player
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
