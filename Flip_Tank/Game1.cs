@@ -9,7 +9,7 @@ namespace Flip_Tank
     /// </summary>
     public class Game1 : Game
     {
-        Player p1 = new Player(0,0,70,70); //creates player object
+        Player p1 = new Player(0,350,70,70); //creates player object
 
         enum GameState { Menu, InWave, EndWave, GameOver };
         GameState gameState;
@@ -50,7 +50,8 @@ namespace Flip_Tank
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            p1.texture = Content.Load<Texture2D>("Tank");   //gives player texture
+            p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
+            p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
 
             // TODO: use this.Content to load your game content here
         }
@@ -77,6 +78,11 @@ namespace Flip_Tank
             // TODO: Add your update logic here
 
             p1.Movement();
+            if(p1.spawnBullet == true)
+            {
+                p1.Shoot();
+            }
+
             base.Update(gameTime);
         }
 
@@ -92,7 +98,11 @@ namespace Flip_Tank
             spriteBatch.Begin();
 
             //if(gameState == GameState.InWave)
-            spriteBatch.Draw(p1.texture, p1.position, Color.White); //draws player
+            spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
+                if(p1.spawnBullet == true)
+            {
+                spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);

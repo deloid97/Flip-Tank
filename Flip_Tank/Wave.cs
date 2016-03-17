@@ -93,13 +93,13 @@ namespace Flip_Tank
             activate = false;
             for(int i = 0; i < waveRoster.Length; i++)
             {
-                waveRoster[i].Deactivate();
+              //  waveRoster[i].Deactivate();
             }
         }
 
         public void Spawn() //spawns enemies if wave is active and there is are fewer enemies than the allowed amount
         {
-            if(Activate && /*condition to check if enemies active is fewer than int OnScreen*/)
+           // if(Activate && /*condition to check if enemies active is fewer than int OnScreen*/)
         }
     }
 }
