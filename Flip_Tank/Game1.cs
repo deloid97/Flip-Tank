@@ -14,8 +14,22 @@ namespace Flip_Tank
         enum GameState { Menu, InWave, EndWave, GameOver };
         GameState gameState;
 
+        Texture2D ground;
+
+       
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        //Setting this value to true will enable developer mode in the game
+        private const bool devMode = false;
+        public static bool DEVMODE
+        {
+            get
+            {
+                return devMode;
+            }
+        }
 
         public Game1()
         {
@@ -33,12 +47,14 @@ namespace Flip_Tank
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-            /*
-            Starts the Developer Tool
 
-            GameBalanceTool gameBalance = new GameBalanceTool();
-            gameBalance.Show();
-            */
+            //Starts the Developer Tool if game is in dev mode
+            if (DEVMODE)
+            {
+                GameBalanceTool gameBalance = new GameBalanceTool();
+                gameBalance.Show();
+            }          
+
         }
 
         /// <summary>
@@ -52,6 +68,8 @@ namespace Flip_Tank
             
             p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
             p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
+
+            ground = Content.Load<Texture2D>("ground"); //gives ground texture
 
             // TODO: use this.Content to load your game content here
         }
@@ -99,9 +117,11 @@ namespace Flip_Tank
 
             //if(gameState == GameState.InWave)
             spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
-                if(p1.spawnBullet == true)
+            spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90),Color.White); //Draws ground
+
+            if(p1.spawnBullet == true)
             {
-                spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
+               spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
             }
 
             spriteBatch.End();
