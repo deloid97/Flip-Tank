@@ -96,7 +96,16 @@ namespace Flip_Tank
             // TODO: Add your update logic here
 
             p1.Movement();
-            if(p1.spawnBullet == true)
+            //keeps tank from moving past screen
+            if (p1.position.X < 0)
+            {
+                p1.position.X = 0;
+            }
+            if (p1.position.X > GraphicsDevice.Viewport.Width - p1.position.Width)
+            {
+                p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
+            }
+            if (p1.spawnBullet == true)
             {
                 p1.Shoot();
             }
