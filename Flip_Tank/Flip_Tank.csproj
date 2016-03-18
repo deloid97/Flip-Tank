@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="Ground.cs" />
     <Compile Include="GroundShield.cs" />
+    <Compile Include="Health.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
