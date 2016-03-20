@@ -104,30 +104,37 @@ namespace Flip_Tank
             // TODO: Add your update logic here
 
             //If the game is at the menu, only check if the player pressed enter.
-            if(gameState == GameState.Menu)
+            if (gameState == GameState.Menu)
             {
                 currState = Keyboard.GetState();
 
-                if(currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
+                if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.InWave;
                 }
 
                 prevState = currState; //Set previous state to last current state                
             }
-            else if(gameState == GameState.InWave)
+            else if (gameState == GameState.InWave)
             {
                 p1.Movement();
+                //keeps tank from moving past screen
+                if (p1.position.X < 0)
+                {
+                    p1.position.X = 0;
+                }
+                if (p1.position.X > GraphicsDevice.Viewport.Width - p1.position.Width)
+                {
+                    p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
+                }
                 if (p1.spawnBullet == true)
                 {
                     p1.Shoot();
                 }
+
+                base.Update(gameTime);
             }
-
-
-            base.Update(gameTime);
         }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
