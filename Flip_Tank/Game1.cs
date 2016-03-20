@@ -15,6 +15,9 @@ namespace Flip_Tank
         GameState gameState;
 
         Texture2D ground;
+        Texture2D menu;
+
+        KeyboardState currState, prevState; //Holds the keyboard states
 
        
 
@@ -48,6 +51,10 @@ namespace Flip_Tank
             // TODO: Add your initialization logic here
             base.Initialize();
 
+            //Initalize KeyboardStates
+            currState = Keyboard.GetState();
+            prevState = Keyboard.GetState();
+
             //Starts the Developer Tool if game is in dev mode
             if (DEVMODE)
             {
@@ -69,6 +76,7 @@ namespace Flip_Tank
             p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
             p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
 
+            menu = Content.Load<Texture2D>("MainMenu");
             ground = Content.Load<Texture2D>("ground"); //gives ground texture
 
             // TODO: use this.Content to load your game content here
@@ -95,11 +103,27 @@ namespace Flip_Tank
 
             // TODO: Add your update logic here
 
-            p1.Movement();
-            if(p1.spawnBullet == true)
+            //If the game is at the menu, only check if the player pressed enter.
+            if(gameState == GameState.Menu)
             {
-                p1.Shoot();
+                currState = Keyboard.GetState();
+
+                if(currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.InWave;
+                }
+
+                prevState = currState; //Set previous state to last current state                
             }
+            else if(gameState == GameState.InWave)
+            {
+                p1.Movement();
+                if (p1.spawnBullet == true)
+                {
+                    p1.Shoot();
+                }
+            }
+
 
             base.Update(gameTime);
         }
@@ -115,13 +139,20 @@ namespace Flip_Tank
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            //if(gameState == GameState.InWave)
-            spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
-            spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90),Color.White); //Draws ground
-
-            if(p1.spawnBullet == true)
+            //Draw main menu
+            if(gameState == GameState.Menu)
             {
-               spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
+                spriteBatch.Draw(menu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            }
+            else if(gameState == GameState.InWave)
+            {
+                spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
+                spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
+
+                if (p1.spawnBullet == true)
+                {
+                    spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
+                }
             }
 
             spriteBatch.End();
