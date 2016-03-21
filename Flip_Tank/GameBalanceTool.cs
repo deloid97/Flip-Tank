@@ -34,10 +34,6 @@ namespace Flip_Tank
             PlayerGroup.TabStop = true;
 
 
-            //Default Values
-            HealthBox.Text = "100";
-            SpeedBox.Text = "5";
-            JumpBox.Text = "10";
         }
 
 

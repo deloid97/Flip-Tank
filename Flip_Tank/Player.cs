@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace Flip_Tank
 {
@@ -14,10 +15,18 @@ namespace Flip_Tank
         public Rectangle position;  //where player is on the screen
         public Texture2D playerTexture;
         public Texture2D bulletTexture;
-        public bool spawnBullet = false;
-        public Rectangle bulletPosition = new Rectangle(0,0,10,10);
+        public Texture2D healthSegment; //A segment of the player's health
 
-        int speed = 2; //Speed player can move left and right
+        public bool spawnBullet = false;
+        public Rectangle bulletPosition = new Rectangle(0, 0, 10, 10);
+
+        int speed; //Speed player can move left and right
+        int jumpHeight; //Height player jumps
+        int maxHealth; //The player's max health
+        int health; //The player's current health
+
+        const int HEALTH_START_X = 25; //Offset for first health segment
+        Rectangle healthRec = new Rectangle(HEALTH_START_X, 420, 25, 30); //Starting location of the first health segment
 
         int groundHeight; //Height when player is sitting on ground
         const double gravAcceleration = 0.1; //Acceleration due to virtual gravity
@@ -25,7 +34,7 @@ namespace Flip_Tank
         int framesFalling; //Number of frames player has been falling
 
         enum state { up, down, jump, shoot };   //players current action
-        enum height { ground, air};
+        enum height { ground, air };
         height hgt = height.ground; //player starts at ground level
         state move;
 
@@ -45,6 +54,16 @@ namespace Flip_Tank
             set { }
         }
 
+        public Texture2D HealthSegment
+        {
+            get
+            {
+                return healthSegment;
+            }
+
+            set { }
+        }
+
         //parameterized constructors
         public Player(int x, int y, int width, int height)
         {
@@ -54,10 +73,18 @@ namespace Flip_Tank
             position.Height = height;
             groundHeight = y;
 
-            if(Game1.DEVMODE)
+            //Current default values
+            speed = 2;
+            jumpHeight = 50;
+            maxHealth = 100;
+
+            if (Game1.DEVMODE)
             {
                 //Run method that reads text file to replace player values
+                ReadFile();
             }
+
+            health = maxHealth; //Set health to whatever the max is to start
 
         }
 
@@ -67,7 +94,7 @@ namespace Flip_Tank
             KeyboardState input = Keyboard.GetState();
 
             Fall(); //Make player fall if still in air
-            
+
             if (hgt == height.ground)   //can't shoot unless jumping
             {
                 spawnBullet = false;
@@ -100,7 +127,7 @@ namespace Flip_Tank
                 position.Y = position.Y + 10; //will be removed after flip, for testing purposes only
                 hgt = height.ground;
             }*/
-            
+
         }
 
         public void Shoot() //sets bullet coordinates to above tank, will be changed when flipping
@@ -109,20 +136,32 @@ namespace Flip_Tank
             bulletPosition.Y = bulletPosition.Y - 100;
         }
 
+        //Deals damage to the player by a set amount
+        public void TakeDamage(int damage)
+        {
+            health = health - damage;
+        }
+
+        //Heals the player by a set amount
+        public void Heal(int healAmt)
+        {
+            health = health + healAmt;
+        }
+
         //Brings tank back to the ground after a jump. Will most likely be heavily altered when flip is finished.
         private void Fall()
         {
 
             //If the distance between the player and the ground is less than the previous ground speed then just place player on ground.
             //Prevents clipping through ground
-            if(position.Y + fallSpeed >= groundHeight)
+            if (position.Y + fallSpeed >= groundHeight)
             {
                 position.Y = groundHeight;
                 hgt = height.ground;
             }
 
             //If the player is in the air after a jump
-            if(hgt == height.air)
+            if (hgt == height.air)
             {
                 framesFalling++; //This test is run every frame so if it comes into here another frame has passed
                 fallSpeed = (int)(Math.Ceiling(gravAcceleration * framesFalling)); //Calculate current speed based on acceleration factor and time passed
@@ -134,5 +173,99 @@ namespace Flip_Tank
                 framesFalling = 0;
             }
         }
+
+
+        //Draws the player health on the screen (code from Tom's health class)
+        //Currently looks awful, going to have to change it
+        public void DrawHealth(SpriteBatch spriteBatch)
+        {
+            //Don't draw if health is below or equal to zero
+            if(health <= 0)
+            {
+                return;
+            }
+
+            int segmentValue = maxHealth / 5; //5 segments of health. This may be changed.
+
+            //Avoids a divide by zero error. If there are zero health segments just return
+            if (segmentValue == 0)
+            {
+                return;
+            }
+
+            int numSegments = health / segmentValue; //Number of segments to be drawn
+
+
+
+            //Draw bars until the current health is reached by incrementing i by the segment amount
+            for (int i = 0; i < numSegments; i++)
+            {
+                spriteBatch.Draw(healthSegment, new Rectangle((healthRec.X * i) + HEALTH_START_X, healthRec.Y, healthRec.Width, healthRec.Height), Color.White);
+            }
+        }
+    
+
+
+    //Reads file generated by Development tool to change player values 
+    //May be updated to be more efficient
+    private void ReadFile()
+    {
+        StreamReader sr = null;
+        try
+        {
+            sr = new StreamReader("ToolValues.txt");
+            bool onSection = false; //Tells whether or not file is on the player section yet
+            int sectionLine = 0; //Line within the correct section
+
+            while (true) //NOT AN INFINITE LOOP. Made so that the current line is reliable and no lines are skipped by calling ReadLine multiple times
+            {
+                string currString = sr.ReadLine();
+                if(currString != null)
+                {
+                      if (onSection)
+                      {
+                          sectionLine++;
+                       
+                          switch (sectionLine)
+                          {
+                              case 1:
+                                  maxHealth = int.Parse(currString);
+                                  break;
+                              case 2:
+                                  speed = int.Parse(currString);
+                                  break;
+                              case 3:
+                                  jumpHeight = int.Parse(currString);
+                                  break;
+                           }
+                      }
+
+                      if (currString == "Player Values")
+                      {
+                          onSection = true;
+                      }
+               }
+              else
+              {
+                  break;
+              }
+          }
+               sr.Close();
+        }
+        catch (FileNotFoundException fnfe)
+        {
+            return; //If there's a file not found exception the tool is running for the first time and therefore no values will be changed
+        }
+        catch (IOException ioe)
+        {
+            Console.WriteLine("IO error: " + ioe.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error occured while reading file:" + e.Message);
+        }
+
+    }
+
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Flip_Tank
 {
+    //CURRENTLY NOT IN USE WILL DECIDE LATER IF A SEPERATE CLASS IS NECESSARY
     class Health
     {
         private int hp;

@@ -25,7 +25,7 @@ namespace Flip_Tank
         SpriteBatch spriteBatch;
 
         //Setting this value to true will enable developer mode in the game
-        private const bool devMode = false;
+        private const bool devMode = true;
         public static bool DEVMODE
         {
             get
@@ -75,6 +75,7 @@ namespace Flip_Tank
             
             p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
             p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
+            p1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
 
             menu = Content.Load<Texture2D>("MainMenu");
             ground = Content.Load<Texture2D>("ground"); //gives ground texture
@@ -118,10 +119,23 @@ namespace Flip_Tank
             else if(gameState == GameState.InWave)
             {
                 p1.Movement();
+
+                //TANK DOES NOT FIRE YET
                 if (p1.spawnBullet == true)
                 {
                     p1.Shoot();
                 }
+
+                //keeps tank from moving past screen
+                if (p1.position.X < 0)
+                {
+                    p1.position.X = 0;
+                }
+                if (p1.position.X > GraphicsDevice.Viewport.Width - p1.position.Width)
+                {
+                    p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
+                }
+              
             }
 
 
@@ -148,6 +162,7 @@ namespace Flip_Tank
             {
                 spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
+                p1.DrawHealth(spriteBatch); //Draws the health
 
                 if (p1.spawnBullet == true)
                 {
