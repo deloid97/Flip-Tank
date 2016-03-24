@@ -119,10 +119,9 @@ namespace Flip_Tank
             else if (gameState == GameState.InWave)
             {
                 p1.Movement();
-<<<<<<< HEAD
 
                 //TANK DOES NOT FIRE YET
-=======
+
                 //keeps tank from moving past screen
                 if (p1.position.X < 0)
                 {
@@ -132,12 +131,10 @@ namespace Flip_Tank
                 {
                     p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
                 }
->>>>>>> 32413ead342f8775ea09aa5b719f4d4787b292de
                 if (p1.spawnBullet == true)
                 {
                     p1.Shoot();
                 }
-<<<<<<< HEAD
 
                 //keeps tank from moving past screen
                 if (p1.position.X < 0)
@@ -148,11 +145,6 @@ namespace Flip_Tank
                 {
                     p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
                 }
-              
-            }
-
-=======
->>>>>>> 32413ead342f8775ea09aa5b719f4d4787b292de
 
                 base.Update(gameTime);
             }
