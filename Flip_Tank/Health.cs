@@ -67,9 +67,12 @@ namespace Flip_Tank
         {
             hp = hp + 1;
         }
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> Movement_and_Shoot
     }
 }

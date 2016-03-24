@@ -119,7 +119,8 @@ namespace Flip_Tank
                 //flipping method added here
                 //if flip is completed without shooting, hgt = height.ground
             }
-
+            
+            
             //Pressing 'S' doesn't work with gravity will uncomment if game requires it
             /*if (input.IsKeyDown(Keys.S) == true && hgt == height.air)   //key may be changed to space
             {
