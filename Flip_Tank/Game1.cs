@@ -11,11 +11,12 @@ namespace Flip_Tank
     {
         Player p1 = new Player(0,350,70,70); //creates player object
 
-        enum GameState { Menu, InWave, EndWave, GameOver };
+        enum GameState { Menu, InWave, Pause, EndWave, GameOver };
         GameState gameState;
 
         Texture2D ground;
         Texture2D menu;
+        Texture2D pause;
 
         KeyboardState currState, prevState; //Holds the keyboard states
 
@@ -78,6 +79,7 @@ namespace Flip_Tank
             p1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
 
             menu = Content.Load<Texture2D>("MainMenu");
+            pause = Content.Load<Texture2D>("pause");
             ground = Content.Load<Texture2D>("ground"); //gives ground texture
 
             // TODO: use this.Content to load your game content here
@@ -102,13 +104,13 @@ namespace Flip_Tank
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            currState = Keyboard.GetState(); //Update keyboard state
+
 
             //If the game is at the menu, only check if the player pressed enter.
             if (gameState == GameState.Menu)
             {
-                currState = Keyboard.GetState();
-
+                
                 if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.InWave;
@@ -118,6 +120,12 @@ namespace Flip_Tank
             }
             else if (gameState == GameState.InWave)
             {
+                //Check if the player paused the game
+                if(currState.IsKeyUp(Keys.P) && prevState.IsKeyDown(Keys.P))
+                {
+                    gameState = GameState.Pause;
+                }
+
                 p1.Movement();
 
                 //TANK DOES NOT FIRE YET
@@ -131,23 +139,21 @@ namespace Flip_Tank
                 {
                     p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
                 }
-                if (p1.spawnBullet == true)
-                {
-                    p1.Shoot();
-                }
 
-                //keeps tank from moving past screen
-                if (p1.position.X < 0)
-                {
-                    p1.position.X = 0;
-                }
-                if (p1.position.X > GraphicsDevice.Viewport.Width - p1.position.Width)
-                {
-                    p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
-                }
-
-                base.Update(gameTime);
+                
             }
+            else if(gameState == GameState.Pause)
+            {
+                //Check if player unpaused the game
+                if (currState.IsKeyUp(Keys.P) && prevState.IsKeyDown(Keys.P))
+                {
+                    gameState = GameState.InWave;
+                }
+            }
+
+            prevState = currState; //Update prev keyboard state
+
+            base.Update(gameTime);
         }
         /// <summary>
         /// This is called when the game should draw itself.
@@ -175,6 +181,16 @@ namespace Flip_Tank
                 {
                     spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
                 }
+            }
+            else if(gameState == GameState.Pause)
+            {
+                //Draw all the in-game stuff but it won't be updating
+                spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
+                spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
+                p1.DrawHealth(spriteBatch); //Draws the health
+
+                //Draw pause text
+                spriteBatch.Draw(pause, new Rectangle(275, 200, 250, 80), Color.White);
             }
 
             spriteBatch.End();

@@ -33,7 +33,7 @@ namespace Flip_Tank
         int fallSpeed; //Current falling speed to be increased by gravity
         int framesFalling; //Number of frames player has been falling
 
-        enum state { up, down, jump, shoot };   //players current action
+        enum state {jump, shoot };   //players current action
         enum height { ground, air };
         height hgt = height.ground; //player starts at ground level
         state move;
@@ -93,12 +93,22 @@ namespace Flip_Tank
         {
             KeyboardState input = Keyboard.GetState();
 
-            Fall(); //Make player fall if still in air
+            
 
             if (hgt == height.ground)   //can't shoot unless jumping
             {
                 spawnBullet = false;
             }
+            else if(move == state.jump)
+            {
+                Jump();
+            }
+            else //If player is off ground and done jumping start falling
+            {
+                Fall();
+            }
+
+
             if (input.IsKeyDown(Keys.A) == true)
             {
                 position.X = position.X - speed;
@@ -112,7 +122,7 @@ namespace Flip_Tank
                 //Don't let the tank continue going up into the air
                 if (hgt != height.air)
                 {
-                    position.Y = position.Y - 100;
+                    position.Y = position.Y - jumpHeight;
                 }
 
                 hgt = height.air;
@@ -173,6 +183,12 @@ namespace Flip_Tank
                 fallSpeed = 0;
                 framesFalling = 0;
             }
+        }
+
+        //Logic for moving the player up for a jump 
+        private void Jump()
+        {
+            
         }
 
 
