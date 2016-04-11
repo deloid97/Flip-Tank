@@ -20,20 +20,28 @@ namespace Flip_Tank
         public bool spawnBullet = false;
         public Rectangle bulletPosition = new Rectangle(0, 0, 10, 10);
 
+        //Jumping
+        int maxJumpSpeed; //Max jump speed
+        int currJumpSpeed; //Current jump speed
+        int jumpHeight; //Height player jumps (FROM REFERENCE OF ORIGIN NOT THE GROUND: Saying "jumpHeight = 0" is making the tank jump to the origin)
+
+        //General
         int speed; //Speed player can move left and right
-        int jumpHeight; //Height player jumps
         int maxHealth; //The player's max health
         int health; //The player's current health
 
+        //Health Drawing
         const int HEALTH_START_X = 25; //Offset for first health segment
         Rectangle healthRec = new Rectangle(HEALTH_START_X, 420, 25, 30); //Starting location of the first health segment
 
+        //Falling
         int groundHeight; //Height when player is sitting on ground
         const double gravAcceleration = 0.1; //Acceleration due to virtual gravity
         int fallSpeed; //Current falling speed to be increased by gravity
         int framesFalling; //Number of frames player has been falling
 
-        enum state {jump, shoot };   //players current action
+        //Movement States
+        enum state {sit, jump, fall};   //players current action
         enum height { ground, air };
         height hgt = height.ground; //player starts at ground level
         state move;
@@ -75,7 +83,8 @@ namespace Flip_Tank
 
             //Current default values
             speed = 2;
-            jumpHeight = 50;
+            jumpHeight = 100;
+            maxJumpSpeed = 6;
             maxHealth = 100;
 
             if (Game1.DEVMODE)
@@ -99,11 +108,12 @@ namespace Flip_Tank
             {
                 spawnBullet = false;
             }
-            else if(move == state.jump)
+
+            if (move == state.jump)
             {
                 Jump();
             }
-            else //If player is off ground and done jumping start falling
+            else if (move == state.fall) //If player is off ground and done jumping start falling
             {
                 Fall();
             }
@@ -119,13 +129,13 @@ namespace Flip_Tank
             }
             if (input.IsKeyDown(Keys.Space) == true)    //will be changed to single key press
             {
-                //Don't let the tank continue going up into the air
                 if (hgt != height.air)
                 {
-                    position.Y = position.Y - jumpHeight;
+                    move = state.jump;
+                    hgt = height.air;
                 }
 
-                hgt = height.air;
+
                 //flipping method added here
                 //if flip is completed without shooting, hgt = height.ground
             }
@@ -169,6 +179,7 @@ namespace Flip_Tank
             {
                 position.Y = groundHeight;
                 hgt = height.ground;
+                move = state.sit;
             }
 
             //If the player is in the air after a jump
@@ -185,10 +196,27 @@ namespace Flip_Tank
             }
         }
 
-        //Logic for moving the player up for a jump 
+        //Logic for moving the player up for a frame of the jump 
         private void Jump()
         {
-            
+            //If the tank is over the jumpheight just put it at the jump height
+            if(position.Y <= jumpHeight)
+            {
+                position.Y = jumpHeight;
+                move = state.fall;
+                return;
+            }
+
+            if (position.Y <= (jumpHeight/2) + jumpHeight) //If the player is approaching the jump height slow down
+            {
+                currJumpSpeed = (int)(maxJumpSpeed / 2); 
+            }
+            else
+            {
+                currJumpSpeed = maxJumpSpeed;
+            }
+
+            position.Y = position.Y - currJumpSpeed;
         }
 
 
