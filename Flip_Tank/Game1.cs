@@ -120,8 +120,19 @@ namespace Flip_Tank
             }
             else if (gameState == GameState.InWave)
             {
+                if(p1.Health <= 0)
+                {
+                    gameState = GameState.GameOver;
+                }
+
+                //TEMPORARY: Test out GameOver. Kills player
+                if (currState.IsKeyUp(Keys.K) && prevState.IsKeyDown(Keys.K))
+                {
+                    p1.TakeDamage(100);
+                }
+
                 //Check if the player paused the game
-                if(currState.IsKeyUp(Keys.P) && prevState.IsKeyDown(Keys.P))
+                if (currState.IsKeyUp(Keys.P) && prevState.IsKeyDown(Keys.P))
                 {
                     gameState = GameState.Pause;
                 }
@@ -148,6 +159,16 @@ namespace Flip_Tank
                 if (currState.IsKeyUp(Keys.P) && prevState.IsKeyDown(Keys.P))
                 {
                     gameState = GameState.InWave;
+                }
+            }
+            else if(gameState == GameState.GameOver)
+            {
+                if(currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
+                {
+                    //Reset player values
+                    //ADD MORE RESETS WHEN MORE IS IMPLEMENTED
+                    p1 = new Player(0, 350, 70, 70);
+                    gameState = GameState.InWave; //Go back to a new game
                 }
             }
 
@@ -191,6 +212,11 @@ namespace Flip_Tank
 
                 //Draw pause text
                 spriteBatch.Draw(pause, new Rectangle(275, 200, 250, 80), Color.White);
+            }
+            else if(gameState == GameState.GameOver)
+            {
+                //Replace when asset put in for game over
+                GraphicsDevice.Clear(Color.CornflowerBlue);
             }
 
             spriteBatch.End();

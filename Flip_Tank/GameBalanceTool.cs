@@ -100,6 +100,8 @@ namespace Flip_Tank
 
             sw.Close(); //Close file
 
+            Application.Restart(); //Restarts the application (BUT DOES NOT CLOSE THE OLDER MONOGAME WINDOW)
+
         }
 
         /// <summary>

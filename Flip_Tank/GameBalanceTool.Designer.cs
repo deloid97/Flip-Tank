@@ -58,12 +58,12 @@
             // 
             // RestartButton
             // 
-            this.RestartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RestartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RestartButton.Location = new System.Drawing.Point(210, 322);
             this.RestartButton.Name = "RestartButton";
             this.RestartButton.Size = new System.Drawing.Size(119, 54);
             this.RestartButton.TabIndex = 4;
-            this.RestartButton.Text = "Restart Game (Restart Manually for now)";
+            this.RestartButton.Text = "Restart Game";
             this.RestartButton.UseVisualStyleBackColor = true;
             this.RestartButton.Click += new System.EventHandler(this.RestartButton_Click);
             // 
@@ -87,6 +87,7 @@
             this.OnScreenBox.Name = "OnScreenBox";
             this.OnScreenBox.Size = new System.Drawing.Size(100, 20);
             this.OnScreenBox.TabIndex = 3;
+            this.OnScreenBox.Text = "0";
             this.OnScreenBox.ValidatingType = typeof(int);
             // 
             // LabelOnScreen
@@ -117,6 +118,7 @@
             this.NumEnemiesBox.Name = "NumEnemiesBox";
             this.NumEnemiesBox.Size = new System.Drawing.Size(100, 20);
             this.NumEnemiesBox.TabIndex = 1;
+            this.NumEnemiesBox.Text = "0";
             this.NumEnemiesBox.ValidatingType = typeof(int);
             // 
             // LabelShieldFlyer
@@ -183,6 +185,7 @@
             this.SFlyerChanceBox.Name = "SFlyerChanceBox";
             this.SFlyerChanceBox.Size = new System.Drawing.Size(100, 20);
             this.SFlyerChanceBox.TabIndex = 7;
+            this.SFlyerChanceBox.Text = "0";
             this.SFlyerChanceBox.ValidatingType = typeof(int);
             // 
             // FlyerChanceBox
@@ -192,6 +195,7 @@
             this.FlyerChanceBox.Name = "FlyerChanceBox";
             this.FlyerChanceBox.Size = new System.Drawing.Size(100, 20);
             this.FlyerChanceBox.TabIndex = 3;
+            this.FlyerChanceBox.Text = "0";
             this.FlyerChanceBox.ValidatingType = typeof(int);
             // 
             // GroundChanceBox
@@ -201,6 +205,7 @@
             this.GroundChanceBox.Name = "GroundChanceBox";
             this.GroundChanceBox.Size = new System.Drawing.Size(100, 20);
             this.GroundChanceBox.TabIndex = 1;
+            this.GroundChanceBox.Text = "0";
             this.GroundChanceBox.ValidatingType = typeof(int);
             // 
             // SGroundChanceBox
@@ -210,6 +215,7 @@
             this.SGroundChanceBox.Name = "SGroundChanceBox";
             this.SGroundChanceBox.Size = new System.Drawing.Size(100, 20);
             this.SGroundChanceBox.TabIndex = 5;
+            this.SGroundChanceBox.Text = "0";
             this.SGroundChanceBox.ValidatingType = typeof(int);
             // 
             // RandSpawnButton
@@ -245,6 +251,7 @@
             this.JumpBox.Name = "JumpBox";
             this.JumpBox.Size = new System.Drawing.Size(100, 20);
             this.JumpBox.TabIndex = 5;
+            this.JumpBox.Text = "30";
             this.JumpBox.ValidatingType = typeof(int);
             // 
             // SpeedBox
@@ -254,6 +261,7 @@
             this.SpeedBox.Name = "SpeedBox";
             this.SpeedBox.Size = new System.Drawing.Size(100, 20);
             this.SpeedBox.TabIndex = 3;
+            this.SpeedBox.Text = "3";
             this.SpeedBox.ValidatingType = typeof(int);
             // 
             // HealthBox
@@ -263,6 +271,7 @@
             this.HealthBox.Name = "HealthBox";
             this.HealthBox.Size = new System.Drawing.Size(100, 20);
             this.HealthBox.TabIndex = 1;
+            this.HealthBox.Text = "100";
             this.HealthBox.ValidatingType = typeof(int);
             // 
             // LabelJump

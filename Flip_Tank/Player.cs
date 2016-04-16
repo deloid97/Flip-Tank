@@ -72,6 +72,14 @@ namespace Flip_Tank
             set { }
         }
 
+        public int Health
+        {
+            get
+            {
+                return health;
+            }
+        }
+
         //parameterized constructors
         public Player(int x, int y, int width, int height)
         {
@@ -139,15 +147,7 @@ namespace Flip_Tank
                 //flipping method added here
                 //if flip is completed without shooting, hgt = height.ground
             }
-            
-            
-            //Pressing 'S' doesn't work with gravity will uncomment if game requires it
-            /*if (input.IsKeyDown(Keys.S) == true && hgt == height.air)   //key may be changed to space
-            {
-                spawnBullet = true;
-                position.Y = position.Y + 10; //will be removed after flip, for testing purposes only
-                hgt = height.ground;
-            }*/
+           
 
         }
 
@@ -163,11 +163,6 @@ namespace Flip_Tank
             health = health - damage;
         }
 
-        //Heals the player by a set amount
-        public void Heal(int healAmt)
-        {
-            health = health + healAmt;
-        }
 
         //Brings tank back to the ground after a jump. Will most likely be heavily altered when flip is finished.
         private void Fall()
