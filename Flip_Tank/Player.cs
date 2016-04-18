@@ -95,6 +95,7 @@ namespace Flip_Tank
             maxJumpSpeed = 6;
             maxHealth = 100;
 
+
             if (Game1.DEVMODE)
             {
                 //Run method that reads text file to replace player values

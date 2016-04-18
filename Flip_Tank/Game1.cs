@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Flip_Tank
 {
@@ -18,6 +19,9 @@ namespace Flip_Tank
         Texture2D menu;
         Texture2D pause;
 
+        static List<Bullet> bulletList = new List<Bullet>();
+        static List<PlayerBullet> playerBulletList = new List<PlayerBullet>();
+
         KeyboardState currState, prevState; //Holds the keyboard states
 
        
@@ -32,6 +36,34 @@ namespace Flip_Tank
             get
             {
                 return devMode;
+            }
+        }
+
+        //Property for the global BulletList
+        internal static List<Bullet> BulletList
+        {
+            get
+            {
+                return bulletList;
+            }
+
+            set
+            {
+                bulletList = value;
+            }
+        }
+        
+        //Property for the global PlayerBulletList
+        internal static List<PlayerBullet> PlayerBulletList
+        {
+            get
+            {
+                return playerBulletList;
+            }
+
+            set
+            {
+                playerBulletList = value;
             }
         }
 
