@@ -19,6 +19,8 @@ namespace Flip_Tank
         Texture2D menu;
         Texture2D pause;
 
+        SpriteFont mainFont;
+
         static List<Bullet> bulletList = new List<Bullet>();
         static List<PlayerBullet> playerBulletList = new List<PlayerBullet>();
 
@@ -109,6 +111,10 @@ namespace Flip_Tank
             p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
             p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
             p1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
+
+            mainFont = Content.Load<SpriteFont>("mainFont"); //loading the font
+
+
 
             menu = Content.Load<Texture2D>("MainMenu");
             pause = Content.Load<Texture2D>("pause");
@@ -229,6 +235,7 @@ namespace Flip_Tank
                 spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
                 p1.DrawHealth(spriteBatch); //Draws the health
+                spriteBatch.DrawString(mainFont, "Health", new Vector2(25, 420), Color.Black); //drawing font to overlap Health
 
                 if (p1.spawnBullet == true)
                 {
