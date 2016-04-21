@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Flip_Tank
 {
@@ -10,7 +11,7 @@ namespace Flip_Tank
     /// </summary>
     public class Game1 : Game
     {
-        Player p1 = new Player(0,350,70,70); //creates player object
+        Player p1 = new Player(0, 350, 70, 70); //creates player object
 
         enum GameState { Menu, InWave, Pause, EndWave, GameOver };
         GameState gameState;
@@ -18,15 +19,21 @@ namespace Flip_Tank
         Texture2D ground;
         Texture2D menu;
         Texture2D pause;
+        Texture2D gameOver;
+        Texture2D bullet;
 
         SpriteFont mainFont;
 
-        static List<Bullet> bulletList = new List<Bullet>();
+        static List<Bullet> bulletList = new List<Bullet>(); //WILL CHANGE WHEN ENEMIES ARE IMPLEMENTED
         static List<PlayerBullet> playerBulletList = new List<PlayerBullet>();
+        static List<Enemy> enemyList = new List<Enemy>(); //WILL CHANGE WHEN ENEMIES ARE IMPLEMENTED
+
+        //WILL BE USED IF GAME BEGINS TO HAVE MANY BULLETS AND MANY ENEMIES
+        Thread bulletThread;
 
         KeyboardState currState, prevState; //Holds the keyboard states
 
-       
+
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -54,7 +61,7 @@ namespace Flip_Tank
                 bulletList = value;
             }
         }
-        
+
         //Property for the global PlayerBulletList
         internal static List<PlayerBullet> PlayerBulletList
         {
@@ -66,6 +73,20 @@ namespace Flip_Tank
             set
             {
                 playerBulletList = value;
+            }
+        }
+
+        //Property for the global EnemyList
+        internal static List<Enemy> EnemyList
+        {
+            get
+            {
+                return enemyList;
+            }
+
+            set
+            {
+                enemyList = value;
             }
         }
 
@@ -95,7 +116,7 @@ namespace Flip_Tank
             {
                 GameBalanceTool gameBalance = new GameBalanceTool();
                 gameBalance.Show();
-            }          
+            }
 
         }
 
@@ -107,18 +128,19 @@ namespace Flip_Tank
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
             p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
             p1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
 
-            mainFont = Content.Load<SpriteFont>("mainFont"); //loading the font
+            mainFont = Content.Load<SpriteFont>("MainFont"); //loading the font
 
-
+            bullet = Content.Load<Texture2D>("Bullet");
 
             menu = Content.Load<Texture2D>("MainMenu");
             pause = Content.Load<Texture2D>("pause");
             ground = Content.Load<Texture2D>("ground"); //gives ground texture
+            gameOver = Content.Load<Texture2D>("GameOver");
 
             // TODO: use this.Content to load your game content here
         }
@@ -148,7 +170,7 @@ namespace Flip_Tank
             //If the game is at the menu, only check if the player pressed enter.
             if (gameState == GameState.Menu)
             {
-                
+
                 if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
                 {
                     gameState = GameState.InWave;
@@ -158,9 +180,13 @@ namespace Flip_Tank
             }
             else if (gameState == GameState.InWave)
             {
-                if(p1.Health <= 0)
+                if (p1.Health <= 0)
                 {
                     gameState = GameState.GameOver;
+
+                    //Clear out the bullets
+                    BulletList.Clear();
+                    PlayerBulletList.Clear();
                 }
 
                 //TEMPORARY: Test out GameOver. Kills player
@@ -177,7 +203,14 @@ namespace Flip_Tank
 
                 p1.Movement();
 
-                //TANK DOES NOT FIRE YET
+                //Manage the bullets
+                MoveBullets();
+                BulletManage();
+
+                /** Threading code to use if optimization needed
+                bulletThread = new Thread(BulletManage);
+                bulletThread.Start();
+                */
 
                 //keeps tank from moving past screen
                 if (p1.position.X < 0)
@@ -189,9 +222,9 @@ namespace Flip_Tank
                     p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
                 }
 
-                
+
             }
-            else if(gameState == GameState.Pause)
+            else if (gameState == GameState.Pause)
             {
                 //Check if player unpaused the game
                 if (currState.IsKeyUp(Keys.P) && prevState.IsKeyDown(Keys.P))
@@ -199,13 +232,12 @@ namespace Flip_Tank
                     gameState = GameState.InWave;
                 }
             }
-            else if(gameState == GameState.GameOver)
+            else if (gameState == GameState.GameOver)
             {
-                if(currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
+                if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
                 {
-                    //Reset player values
-                    //ADD MORE RESETS WHEN MORE IS IMPLEMENTED
-                    p1 = new Player(0, 350, 70, 70);
+                    //Reset player
+                    p1.Reset();
                     gameState = GameState.InWave; //Go back to a new game
                 }
             }
@@ -226,23 +258,23 @@ namespace Flip_Tank
             spriteBatch.Begin();
 
             //Draw main menu
-            if(gameState == GameState.Menu)
+            if (gameState == GameState.Menu)
             {
                 spriteBatch.Draw(menu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
             }
-            else if(gameState == GameState.InWave)
+            else if (gameState == GameState.InWave)
             {
                 spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
                 p1.DrawHealth(spriteBatch); //Draws the health
                 spriteBatch.DrawString(mainFont, "Health", new Vector2(25, 420), Color.Black); //drawing font to overlap Health
 
-                if (p1.spawnBullet == true)
-                {
-                    spriteBatch.Draw(p1.bulletTexture, p1.bulletPosition, Color.White);
-                }
+                //Enemy drawing (when implemented)
+
+                DrawBullets();
+
             }
-            else if(gameState == GameState.Pause)
+            else if (gameState == GameState.Pause)
             {
                 //Draw all the in-game stuff but it won't be updating
                 spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
@@ -252,14 +284,108 @@ namespace Flip_Tank
                 //Draw pause text
                 spriteBatch.Draw(pause, new Rectangle(275, 200, 250, 80), Color.White);
             }
-            else if(gameState == GameState.GameOver)
+            else if (gameState == GameState.GameOver)
             {
-                //Replace when asset put in for game over
-                GraphicsDevice.Clear(Color.CornflowerBlue);
+                //Draw the GameOver screen
+                spriteBatch.Draw(gameOver, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+
             }
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+
+        /// <summary>
+        /// Manages all the bullets and their collisions on screen as well as remove them from their list if they are inActive
+        /// Does NOT move the bullets since that needs to be frame dependent and this can be on a different thread
+        /// </summary>
+        public void BulletManage()
+        {
+            //Manage enemy bullets
+            if (BulletList.Count > 0)
+            {
+                int count = BulletList.Count;
+                for(int i = 0; i < count; i++)
+                {
+                    Bullet currB = BulletList[i];
+                    currB.CheckCollision(p1);
+
+                    //Take the bullet out of the list if the collision check caused it to be inactive
+                    if (!currB.IsActive)
+                    {
+                        BulletList.Remove(currB);
+                    }
+
+                    count = BulletList.Count;
+                }
+               
+            }
+
+            //Manage player bullets
+            if (PlayerBulletList.Count > 0)
+            {
+                int count = PlayerBulletList.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    PlayerBullet currPB = PlayerBulletList[i];
+                    currPB.CheckCollision(EnemyList);
+
+                    //Take the bullet out of the list if the collision check caused it to be inactive
+                    if (!currPB.IsActive)
+                    {
+                        PlayerBulletList.Remove(currPB);
+                    }
+
+                    //Updates the for loop boundary since a bullet could be added before it finishes
+                    count = PlayerBulletList.Count;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called to increment all the bullets each frame
+        /// </summary>
+        private void MoveBullets()
+        {
+            if (BulletList.Count > 0)
+            {
+                foreach (Bullet currB in BulletList)
+                {
+                    currB.MoveY();
+                }
+            }
+
+            if (PlayerBulletList.Count > 0)
+            {
+                foreach (PlayerBullet currPB in PlayerBulletList)
+                {
+                    currPB.MoveY();
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Called to draw all the bullets each frame
+        /// </summary>
+        private void DrawBullets()
+        {
+            if (BulletList.Count > 0)
+            {
+                foreach (Bullet currB in BulletList)
+                {
+                    currB.Draw(spriteBatch, bullet);
+                }
+            }
+
+            if (PlayerBulletList.Count > 0)
+            {
+                foreach (PlayerBullet currPB in playerBulletList)
+                {
+                    currPB.Draw(spriteBatch, bullet);
+                }
+            }
         }
     }
 }

@@ -13,19 +13,20 @@ namespace Flip_Tank
     {
         //attributes and properties
         public Rectangle position;  //where player is on the screen
+        public Rectangle defaultPosition; //Default player location
         public Texture2D playerTexture;
         public Texture2D bulletTexture;
         public Texture2D healthSegment; //A segment of the player's health
 
-        public bool spawnBullet = false;
-        public Rectangle bulletPosition = new Rectangle(0, 0, 10, 10);
+        //Shooting
+        public Rectangle bulletPosition;
 
         //Jumping
         int maxJumpSpeed; //Max jump speed
         int currJumpSpeed; //Current jump speed
         int jumpHeight; //Height player jumps (FROM REFERENCE OF ORIGIN NOT THE GROUND: Saying "jumpHeight = 0" is making the tank jump to the origin)
 
-        //General
+        //Stats
         int speed; //Speed player can move left and right
         int maxHealth; //The player's max health
         int health; //The player's current health
@@ -46,6 +47,12 @@ namespace Flip_Tank
         height hgt = height.ground; //player starts at ground level
         state move;
 
+        //Input states
+        KeyboardState currKState;
+        KeyboardState prevKState;
+        MouseState currMState;
+        MouseState prevMstate;
+
         public Rectangle Position
         {
             get { return position; }
@@ -54,11 +61,6 @@ namespace Flip_Tank
         public Texture2D Texture
         {
             get { return playerTexture; }
-            set { }
-        }
-        public bool SpawnBullet
-        {
-            get { return spawnBullet; }
             set { }
         }
 
@@ -80,14 +82,26 @@ namespace Flip_Tank
             }
         }
 
+        public int GroundHeight
+        {
+            get
+            {
+                return groundHeight;
+            }
+
+            set
+            {
+                groundHeight = value;
+            }
+        }
+
         //parameterized constructors
         public Player(int x, int y, int width, int height)
         {
-            position.X = x;
-            position.Y = y;
-            position.Width = width;
-            position.Height = height;
-            groundHeight = y;
+            defaultPosition = new Rectangle(x, y, width, height);
+            position = defaultPosition;
+            bulletPosition = new Rectangle(x + width / 2, y + height + 20, 20, 20); //Set bullet position width and height relative of the texture image
+            GroundHeight = y;
 
             //Current default values
             speed = 2;
@@ -95,6 +109,13 @@ namespace Flip_Tank
             maxJumpSpeed = 6;
             maxHealth = 100;
 
+            health = maxHealth; //Set health to whatever the max is to start
+
+            //Initialize input states
+            currKState = Keyboard.GetState();
+            prevKState = Keyboard.GetState();
+            currMState = Mouse.GetState();
+            prevMstate = Mouse.GetState();
 
             if (Game1.DEVMODE)
             {
@@ -102,21 +123,21 @@ namespace Flip_Tank
                 ReadFile();
             }
 
-            health = maxHealth; //Set health to whatever the max is to start
+
 
         }
 
         //methods
-        public void Movement()  //Determines player movement state to be used in Game1 Update()
+
+        /// <summary>
+        /// Handles all player input during the game
+        /// </summary>
+        public void Movement()
         {
-            KeyboardState input = Keyboard.GetState();
+            currKState = Keyboard.GetState();
+            currMState = Mouse.GetState();
 
             
-
-            if (hgt == height.ground)   //can't shoot unless jumping
-            {
-                spawnBullet = false;
-            }
 
             if (move == state.jump)
             {
@@ -127,16 +148,15 @@ namespace Flip_Tank
                 Fall();
             }
 
-
-            if (input.IsKeyDown(Keys.A) == true)
+            if (currKState.IsKeyDown(Keys.A))
             {
                 position.X = position.X - speed;
             }
-            if (input.IsKeyDown(Keys.D) == true)
+            if (currKState.IsKeyDown(Keys.D))
             {
                 position.X = position.X + speed;
             }
-            if (input.IsKeyDown(Keys.Space) == true)    //will be changed to single key press
+            if (currKState.IsKeyDown(Keys.Space))
             {
                 if (hgt != height.air)
                 {
@@ -148,14 +168,32 @@ namespace Flip_Tank
                 //flipping method added here
                 //if flip is completed without shooting, hgt = height.ground
             }
-           
 
+            //Update bullet position
+            bulletPosition.X = position.X;
+            bulletPosition.Y = position.Y;
+
+            //Check if player shot
+            if(currMState.LeftButton == ButtonState.Released && prevMstate.LeftButton == ButtonState.Pressed)
+            {
+                Shoot();
+            }
+            
+
+            //Update input states
+            prevKState = currKState;
+            prevMstate = currMState;
         }
 
         public void Shoot() //sets bullet coordinates to above tank, will be changed when flipping
         {
-            bulletPosition.X = position.X;
-            bulletPosition.Y = bulletPosition.Y - 100;
+            //Only shoot if there are less than 3 player bullets already in existence
+            if(Game1.PlayerBulletList.Count < 3)
+            {
+                PlayerBullet b = new PlayerBullet(bulletPosition, 0);
+                Game1.PlayerBulletList.Add(b); //Add the bullet to the global list
+            }
+
         }
 
         //Deals damage to the player by a set amount
@@ -164,6 +202,14 @@ namespace Flip_Tank
             health = health - damage;
         }
 
+        //Resets the player to starting values (more statements will be added with more features)
+        public void Reset()
+        {
+            health = maxHealth;
+            position = defaultPosition;
+        }
+
+        //PRIVATE METHODS
 
         //Brings tank back to the ground after a jump. Will most likely be heavily altered when flip is finished.
         private void Fall()
@@ -171,9 +217,9 @@ namespace Flip_Tank
 
             //If the distance between the player and the ground is less than the previous ground speed then just place player on ground.
             //Prevents clipping through ground
-            if (position.Y + fallSpeed >= groundHeight)
+            if (position.Y + fallSpeed >= GroundHeight)
             {
-                position.Y = groundHeight;
+                position.Y = GroundHeight;
                 hgt = height.ground;
                 move = state.sit;
             }
