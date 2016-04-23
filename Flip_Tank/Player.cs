@@ -105,7 +105,7 @@ namespace Flip_Tank
 
             //Current default values
             speed = 2;
-            jumpHeight = 100;
+            jumpHeight = 30;
             maxJumpSpeed = 6;
             maxHealth = 100;
 
@@ -241,7 +241,7 @@ namespace Flip_Tank
         //Logic for moving the player up for a frame of the jump 
         private void Jump()
         {
-            //If the tank is over the jumpheight just put it at the jump height
+            //If the tank is over the jump height just put it at the jump height
             if(position.Y <= jumpHeight)
             {
                 position.Y = jumpHeight;

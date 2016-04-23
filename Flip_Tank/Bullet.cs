@@ -12,7 +12,7 @@ namespace Flip_Tank
         Rectangle location;
 
         //Can change all general bullets' stats from here
-        int bulletSpeed = 3;
+        int bulletSpeed = 6;
         int damage = 25; 
         bool isActive; //Tells whether or not the bullet is currently active flying through the air
         int boundryY;

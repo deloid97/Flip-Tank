@@ -273,6 +273,15 @@ namespace Flip_Tank
 
                 DrawBullets();
 
+                //TEMPORARY controls drawing
+                spriteBatch.DrawString(mainFont, "Controls (Placed here for demo only):", new Vector2(0, 0), Color.Black);
+                spriteBatch.DrawString(mainFont, "A/D: Move", new Vector2(0, 20), Color.Black);
+                spriteBatch.DrawString(mainFont, "Space: Jump", new Vector2(0, 40), Color.Black);
+                spriteBatch.DrawString(mainFont, "Left Mouse: Shoot", new Vector2(0, 60), Color.Black);
+                spriteBatch.DrawString(mainFont, "K: Temp. End Game", new Vector2(0, 80), Color.Black);
+
+
+
             }
             else if (gameState == GameState.Pause)
             {
@@ -289,6 +298,8 @@ namespace Flip_Tank
                 //Draw the GameOver screen
                 spriteBatch.Draw(gameOver, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
+                //Draw restart text
+                spriteBatch.DrawString(mainFont, "Press enter to restart...", new Vector2(0, 0), Color.White);
             }
 
             spriteBatch.End();
