@@ -23,7 +23,19 @@ namespace Flip_Tank
         /// </summary>
         public new void Move()
         {
-            Location = new Rectangle(Location.X + ((int)(spinPos) + BulletSpeed), Location.Y + ((int)(spinPos) + BulletSpeed), Location.Width, Location.Height);
+            //Location = new Rectangle(Location.X + ((int)(spinPos) + BulletSpeed), Location.Y + ((int)(spinPos) + BulletSpeed), Location.Width, Location.Height)
+
+            double angle = spinPos / (2 * Math.PI);
+
+            if (angle >= 0 && angle < .25)
+                Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y + ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
+            if (angle >= .25 && angle < .50)
+                Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y - ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
+            if (angle >= .50 && angle < .75)
+                Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y - ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
+            if (angle >= .75 && angle < 1.00)
+                Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y + ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
+
         }
 
         /// <summary>

@@ -211,7 +211,7 @@ namespace Flip_Tank
         public void Shoot() //sets bullet coordinates to above tank, will be changed when flipping
         {
             //Only shoot if there are less than 3 player bullets already in existence
-            if(Game1.PlayerBulletList.Count < 3)
+            if(Game1.PlayerBulletList.Count < 10)
             {
                 PlayerBullet b = new PlayerBullet(bulletPosition, 0, SpinPos);
                 Game1.PlayerBulletList.Add(b); //Add the bullet to the global list
