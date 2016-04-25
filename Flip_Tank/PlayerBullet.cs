@@ -23,7 +23,7 @@ namespace Flip_Tank
         /// </summary>
         public new void Move()
         {
-            Location = new Rectangle((int)(spinPos) + BulletSpeed, (int)(spinPos) + BulletSpeed, Location.Width, Location.Height);
+            Location = new Rectangle(Location.X + ((int)(spinPos) + BulletSpeed), Location.Y + ((int)(spinPos) + BulletSpeed), Location.Width, Location.Height);
         }
 
         /// <summary>
@@ -32,8 +32,9 @@ namespace Flip_Tank
         /// <param name="player"></param>
         public void CheckCollision(List<Enemy> enemies)
         {
-
-            if (Location.Y < BoundryY) //If the bullet goes off the top of the screen
+            //If the bullet goes off the top or bottom of the screen of the screen
+            //400 is the current value used for the ground
+            if (Location.Y < BoundryY || Location.Y > 400) 
             {
                 IsActive = false;
             }

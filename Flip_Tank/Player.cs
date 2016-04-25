@@ -154,9 +154,7 @@ namespace Flip_Tank
         public void Movement()
         {
             currKState = Keyboard.GetState();
-            currMState = Mouse.GetState();
-
-            
+            currMState = Mouse.GetState();            
 
             if (move == state.jump)
             {
