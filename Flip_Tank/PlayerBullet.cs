@@ -19,7 +19,7 @@ namespace Flip_Tank
         /// Moves bullet down the screen along the y-axis (this is a basic version of a possible bullet move method) (should be called once a frame)
         /// ADDS to the Y location so NEGATIVE numbers move UP
         /// </summary>
-        public new void MovePB(Player p1)
+        public new void Move(Player p1)
         {
             Location = new Rectangle((int)(Math.Acos(p1.SpinPos)) - BulletSpeed, (int)(Math.Asin(p1.SpinPos)) - BulletSpeed, Location.Width, Location.Height);
         }
