@@ -41,6 +41,11 @@ namespace Flip_Tank
         int fallSpeed; //Current falling speed to be increased by gravity
         int framesFalling; //Number of frames player has been falling
 
+        //Spinning
+        Vector2 tankOrigin;
+        float spinPos;
+        bool spinOnce;
+
         //Movement States
         enum state {sit, jump, fall};   //players current action
         enum height { ground, air };
@@ -57,6 +62,11 @@ namespace Flip_Tank
         {
             get { return position; }
             set { }
+        }
+
+        public float SpinPos
+        {
+            get { return spinPos; }
         }
         public Texture2D Texture
         {
@@ -95,6 +105,14 @@ namespace Flip_Tank
             }
         }
 
+        public Vector2 Origin
+        {
+            get
+            {
+                return tankOrigin;
+            }
+        }
+
         //parameterized constructors
         public Player(int x, int y, int width, int height)
         {
@@ -102,6 +120,7 @@ namespace Flip_Tank
             position = defaultPosition;
             bulletPosition = new Rectangle(x + width / 2, y + height + 20, 20, 20); //Set bullet position width and height relative of the texture image
             GroundHeight = y;
+            tankOrigin = new Vector2(width, height); // set spin axis to center of the tank
 
             //Current default values
             speed = 2;
@@ -162,11 +181,17 @@ namespace Flip_Tank
                 {
                     move = state.jump;
                     hgt = height.air;
+                    spinOnce = false;
+                    spinPos = 0;
                 }
-
-
-                //flipping method added here
-                //if flip is completed without shooting, hgt = height.ground
+            }
+            if(hgt == height.air && !spinOnce)
+            {
+                spinPos += ((float)((/*speed of spin goes here*/1) * 2 * Math.PI)) / 100f;
+                if(spinPos > (2*Math.PI))
+                {
+                    spinOnce = true;
+                }
             }
 
             //Update bullet position

@@ -264,7 +264,7 @@ namespace Flip_Tank
             }
             else if (gameState == GameState.InWave)
             {
-                spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
+                spriteBatch.Draw(p1.playerTexture, p1.position, null, Color.White, p1.SpinPos, p1.Origin, SpriteEffects.None, 0); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
                 p1.DrawHealth(spriteBatch); //Draws the health
                 spriteBatch.DrawString(mainFont, "Health", new Vector2(25, 420), Color.Black); //drawing font to overlap Health
@@ -363,7 +363,7 @@ namespace Flip_Tank
             {
                 foreach (Bullet currB in BulletList)
                 {
-                    currB.MoveY();
+                    currB.Move(p1);
                 }
             }
 
@@ -371,7 +371,7 @@ namespace Flip_Tank
             {
                 foreach (PlayerBullet currPB in PlayerBulletList)
                 {
-                    currPB.MoveY();
+                    currPB.Move(p1);
                 }
             }
 
