@@ -371,7 +371,7 @@ namespace Flip_Tank
             {
                 foreach (PlayerBullet currPB in PlayerBulletList)
                 {
-                    currPB.Move(p1);
+                    currPB.Move();
                 }
             }
 

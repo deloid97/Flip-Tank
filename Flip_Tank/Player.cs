@@ -215,7 +215,7 @@ namespace Flip_Tank
             //Only shoot if there are less than 3 player bullets already in existence
             if(Game1.PlayerBulletList.Count < 3)
             {
-                PlayerBullet b = new PlayerBullet(bulletPosition, 0);
+                PlayerBullet b = new PlayerBullet(bulletPosition, 0, SpinPos);
                 Game1.PlayerBulletList.Add(b); //Add the bullet to the global list
             }
 

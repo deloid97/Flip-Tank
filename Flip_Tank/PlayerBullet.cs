@@ -9,19 +9,20 @@ namespace Flip_Tank
 {
     class PlayerBullet : Bullet
     {
+        float spinPos;
         //Constructs a Player Bullet
-        public PlayerBullet(Rectangle locRec, int bndryY):base(locRec,bndryY)
+        public PlayerBullet(Rectangle locRec, int bndryY, float spin):base(locRec,bndryY)
         {
-     
+            spinPos = spin;
         }
 
         /// <summary>
         /// Moves bullet down the screen along the y-axis (this is a basic version of a possible bullet move method) (should be called once a frame)
         /// ADDS to the Y location so NEGATIVE numbers move UP
         /// </summary>
-        public new void Move(Player p1)
+        public new void Move()
         {
-            Location = new Rectangle((int)(Math.Acos(p1.SpinPos)) - BulletSpeed, (int)(Math.Asin(p1.SpinPos)) - BulletSpeed, Location.Width, Location.Height);
+            Location = new Rectangle((int)(spinPos) + BulletSpeed, (int)(spinPos) + BulletSpeed, Location.Width, Location.Height);
         }
 
         /// <summary>
