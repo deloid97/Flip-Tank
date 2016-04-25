@@ -363,7 +363,7 @@ namespace Flip_Tank
             {
                 foreach (Bullet currB in BulletList)
                 {
-                    currB.Move(p1);
+                    currB.Move();
                 }
             }
 
@@ -371,7 +371,7 @@ namespace Flip_Tank
             {
                 foreach (PlayerBullet currPB in PlayerBulletList)
                 {
-                    currPB.Move(p1);
+                    currPB.MovePB(p1);
                 }
             }
 
