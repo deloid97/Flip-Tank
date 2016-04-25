@@ -251,7 +251,7 @@
             this.JumpBox.Name = "JumpBox";
             this.JumpBox.Size = new System.Drawing.Size(100, 20);
             this.JumpBox.TabIndex = 5;
-            this.JumpBox.Text = "30";
+            this.JumpBox.Text = "100";
             this.JumpBox.ValidatingType = typeof(int);
             // 
             // SpeedBox

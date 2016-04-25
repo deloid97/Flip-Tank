@@ -17,8 +17,9 @@ namespace Flip_Tank
         }
 
         /// <summary>
-        /// Moves bullet down the screen along the y-axis (this is a basic version of a possible bullet move method) (should be called once a frame)
+        /// Moves bullet according to the player's current spin position when the bullet was created (should be called once a frame)
         /// ADDS to the Y location so NEGATIVE numbers move UP
+        /// CURRENTLY BUGGED
         /// </summary>
         public new void Move()
         {

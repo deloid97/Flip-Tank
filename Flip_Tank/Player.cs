@@ -124,7 +124,7 @@ namespace Flip_Tank
 
             //Current default values
             speed = 2;
-            jumpHeight = 30;
+            jumpHeight = 100;
             maxJumpSpeed = 6;
             maxHealth = 100;
 
