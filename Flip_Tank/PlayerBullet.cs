@@ -19,22 +19,27 @@ namespace Flip_Tank
         /// <summary>
         /// Moves bullet according to the player's current spin position when the bullet was created (should be called once a frame)
         /// ADDS to the Y location so NEGATIVE numbers move UP
-        /// CURRENTLY BUGGED
         /// </summary>
         public new void Move()
         {
+            //If the tank is just sitting on the ground with no spin Position just shoot straight up
+            if(spinPos == 0)
+            {
+                Location = new Rectangle(Location.X, Location.Y - BulletSpeed, Location.Width, Location.Height);
+                return;
+            }
             //Location = new Rectangle(Location.X + ((int)(spinPos) + BulletSpeed), Location.Y + ((int)(spinPos) + BulletSpeed), Location.Width, Location.Height)
 
             double angle = spinPos / (2 * Math.PI);
 
-            if (angle >= 0 && angle < .25)
-                Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y + ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
-            if (angle >= .25 && angle < .50)
+            if (angle > 0 && angle < .25)
                 Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y - ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
-            if (angle >= .50 && angle < .75)
-                Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y - ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
-            if (angle >= .75 && angle < 1.00)
+            else if (angle >= .25 && angle < .50)
                 Location = new Rectangle(Location.X + ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y + ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
+            else if (angle >= .50 && angle < .75)
+                Location = new Rectangle(Location.X - ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y + ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
+            else if (angle >= .75 && angle < 1.00)
+                Location = new Rectangle(Location.X - ((int)(Math.Cos(spinPos)) + BulletSpeed), Location.Y - ((int)(Math.Sin(spinPos)) + BulletSpeed), Location.Width, Location.Height);
 
         }
 

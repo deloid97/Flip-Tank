@@ -11,7 +11,7 @@ namespace Flip_Tank
     /// </summary>
     public class Game1 : Game
     {
-        Player p1 = new Player(0, 350, 70, 70); //creates player object
+        Player p1 = new Player(0, 360, 70, 70); //creates player object
 
         enum GameState { Menu, InWave, Pause, EndWave, GameOver };
         GameState gameState;
@@ -287,7 +287,7 @@ namespace Flip_Tank
             else if (gameState == GameState.Pause)
             {
                 //Draw all the in-game stuff but it won't be updating
-                spriteBatch.Draw(p1.playerTexture, p1.position, Color.White); //draws player
+                spriteBatch.Draw(p1.playerTexture, p1.position, null, Color.White, p1.SpinPos, p1.Origin, SpriteEffects.None, 0); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
                 p1.DrawHealth(spriteBatch); //Draws the health
 

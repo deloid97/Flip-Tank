@@ -118,8 +118,8 @@ namespace Flip_Tank
         {
             defaultPosition = new Rectangle(x, y, width, height);
             position = defaultPosition;
-            bulletPosition = new Rectangle(x + width / 2, y + height + 20, 20, 20); //Set bullet position width and height relative of the texture image
-            GroundHeight = y;
+            bulletPosition = new Rectangle(x + width / 2, y - height - 20, 20, 20); //Set bullet position width and height relative of the texture image
+            groundHeight = y;
             tankOrigin = new Vector2(width, height); // set spin axis to center of the tank
 
             //Current default values
@@ -181,6 +181,7 @@ namespace Flip_Tank
                     hgt = height.air;
                     spinOnce = false;
                     spinPos = 0;
+                    position.Y = groundHeight;
                 }
             }
             if(hgt == height.air && !spinOnce)
@@ -189,12 +190,34 @@ namespace Flip_Tank
                 if(spinPos > (2*Math.PI))
                 {
                     spinOnce = true;
+                    spinPos = 0; //Reset the spin Position
                 }
             }
 
-            //Update bullet position
-            bulletPosition.X = position.X;
-            bulletPosition.Y = position.Y;
+           
+            double angle = spinPos / (2 * Math.PI);
+            //Update bullet position according to the angle
+            //If the tank is sitting on the ground
+            if (spinPos == 0)
+            {
+                bulletPosition.X = position.X + position.Width / 7;
+                bulletPosition.Y = position.Y - 20;
+            }
+            else //If the tank is currently flipping
+            {
+                bulletPosition = new Rectangle(position.X, position.Y, bulletPosition.Width, bulletPosition.Height);
+
+                if (angle > 0 && angle < .25)
+                    bulletPosition = new Rectangle(bulletPosition.X + (int)(Math.Cos(spinPos)), bulletPosition.Y - (int)(Math.Sin(spinPos)), bulletPosition.Width, bulletPosition.Height);
+                else if (angle >= .25 && angle < .50)
+                    bulletPosition = new Rectangle(bulletPosition.X + (int)(Math.Cos(spinPos)), bulletPosition.Y + (int)(Math.Sin(spinPos)), bulletPosition.Width, bulletPosition.Height);
+                else if (angle >= .50 && angle < .75)
+                    bulletPosition = new Rectangle(bulletPosition.X - (int)(Math.Cos(spinPos)), bulletPosition.Y + (int)(Math.Sin(spinPos)), bulletPosition.Width, bulletPosition.Height);
+                else if (angle >= .75 && angle < 1.00)
+                    bulletPosition = new Rectangle(bulletPosition.X - (int)(Math.Cos(spinPos)), bulletPosition.Y - (int)(Math.Sin(spinPos)), bulletPosition.Width, bulletPosition.Height);
+            }
+
+
 
             //Check if player shot
             if(currMState.LeftButton == ButtonState.Released && prevMstate.LeftButton == ButtonState.Pressed)
