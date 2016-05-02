@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.RestartButton = new System.Windows.Forms.Button();
             this.WaveGroup = new System.Windows.Forms.GroupBox();
             this.OnScreenBox = new System.Windows.Forms.MaskedTextBox();
             this.LabelOnScreen = new System.Windows.Forms.Label();
@@ -51,21 +50,14 @@
             this.LabelJump = new System.Windows.Forms.Label();
             this.LabelSpeed = new System.Windows.Forms.Label();
             this.LabelHealth = new System.Windows.Forms.Label();
+            this.ClearButton = new System.Windows.Forms.Button();
+            this.PlayerSave = new System.Windows.Forms.Button();
+            this.DefaultPlayer = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.WaveGroup.SuspendLayout();
             this.EnemySpawnGroup.SuspendLayout();
             this.PlayerGroup.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // RestartButton
-            // 
-            this.RestartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RestartButton.Location = new System.Drawing.Point(210, 322);
-            this.RestartButton.Name = "RestartButton";
-            this.RestartButton.Size = new System.Drawing.Size(119, 54);
-            this.RestartButton.TabIndex = 4;
-            this.RestartButton.Text = "Restart Game";
-            this.RestartButton.UseVisualStyleBackColor = true;
-            this.RestartButton.Click += new System.EventHandler(this.RestartButton_Click);
             // 
             // WaveGroup
             // 
@@ -237,7 +229,7 @@
             this.PlayerGroup.Controls.Add(this.LabelJump);
             this.PlayerGroup.Controls.Add(this.LabelSpeed);
             this.PlayerGroup.Controls.Add(this.LabelHealth);
-            this.PlayerGroup.Location = new System.Drawing.Point(14, 151);
+            this.PlayerGroup.Location = new System.Drawing.Point(12, 244);
             this.PlayerGroup.Name = "PlayerGroup";
             this.PlayerGroup.Size = new System.Drawing.Size(307, 136);
             this.PlayerGroup.TabIndex = 2;
@@ -304,16 +296,63 @@
             this.LabelHealth.TabIndex = 0;
             this.LabelHealth.Text = "Health";
             // 
+            // ClearButton
+            // 
+            this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClearButton.Location = new System.Drawing.Point(174, 164);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(119, 54);
+            this.ClearButton.TabIndex = 5;
+            this.ClearButton.Text = "Clear Directory";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            // 
+            // PlayerSave
+            // 
+            this.PlayerSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlayerSave.Location = new System.Drawing.Point(360, 244);
+            this.PlayerSave.Name = "PlayerSave";
+            this.PlayerSave.Size = new System.Drawing.Size(114, 46);
+            this.PlayerSave.TabIndex = 6;
+            this.PlayerSave.Text = "Set New Player Values";
+            this.PlayerSave.UseVisualStyleBackColor = true;
+            this.PlayerSave.Click += new System.EventHandler(this.PlayerSave_Click);
+            // 
+            // DefaultPlayer
+            // 
+            this.DefaultPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DefaultPlayer.Location = new System.Drawing.Point(360, 307);
+            this.DefaultPlayer.Name = "DefaultPlayer";
+            this.DefaultPlayer.Size = new System.Drawing.Size(114, 50);
+            this.DefaultPlayer.TabIndex = 7;
+            this.DefaultPlayer.Text = "Default Player Values";
+            this.DefaultPlayer.UseVisualStyleBackColor = true;
+            this.DefaultPlayer.Click += new System.EventHandler(this.DefaultPlayer_Click);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SaveButton.Location = new System.Drawing.Point(23, 164);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(119, 54);
+            this.SaveButton.TabIndex = 8;
+            this.SaveButton.Text = "Save New Wave";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
             // GameBalanceTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 388);
+            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.DefaultPlayer);
+            this.Controls.Add(this.PlayerSave);
+            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.PlayerGroup);
             this.Controls.Add(this.RandSpawnButton);
             this.Controls.Add(this.EnemySpawnGroup);
             this.Controls.Add(this.WaveGroup);
-            this.Controls.Add(this.RestartButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GameBalanceTool";
             this.Text = "Game Balance Tool";
@@ -329,8 +368,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button RestartButton;
         private System.Windows.Forms.GroupBox WaveGroup;
         private System.Windows.Forms.Label LabelShieldFlyer;
         private System.Windows.Forms.Label LabelShieldGround;
@@ -353,5 +390,9 @@
         private System.Windows.Forms.Label LabelJump;
         private System.Windows.Forms.Label LabelSpeed;
         private System.Windows.Forms.Label LabelHealth;
+        private System.Windows.Forms.Button ClearButton;
+        private System.Windows.Forms.Button PlayerSave;
+        private System.Windows.Forms.Button DefaultPlayer;
+        private System.Windows.Forms.Button SaveButton;
     }
 }

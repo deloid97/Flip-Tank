@@ -18,6 +18,7 @@ namespace Flip_Tank
     public partial class GameBalanceTool : Form
     {
         Random rand; //Random to be used for randomizing spawn chances
+        int waveNum; //integer to increment with each wave creation.  For use with creating file names
 
         public GameBalanceTool()
         {
@@ -32,76 +33,33 @@ namespace Flip_Tank
             WaveGroup.TabStop = true;
             EnemySpawnGroup.TabStop = true;
             PlayerGroup.TabStop = true;
+            waveNum = 0;
 
+            //creates a directory for the waves files if none exists
+            if (!Directory.Exists("bin/Debug/WaveCache"))
+                Directory.CreateDirectory("bin/Debug/WaveCache");
 
-        }
-
-
-        /// <summary>
-        /// Takes the input values from the user, writes them to the ToolValues file and then restarts the game.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RestartButton_Click(object sender, EventArgs e)
-        {
-
-            //Send player to main menu to restart
-
-            /*
-            TEXT FILE FORMAT:
-
-            "Wave Values"
-            Number of Enemies
-            Number of Enemies on screen
-            "Spawn Chances"
-            Ground Chance
-            Flyer Chance
-            Shielded Ground Chance
-            Shielded Flyer Chance
-            "Player Values"
-            Health
-            Speed
-            Jump Height
-            */
-
-            //Wipe all the data from the last time the game ran
-            System.IO.File.WriteAllText("ToolValues.txt", string.Empty);
-
-            //Get ready to write to file
-            StreamWriter sw = null;
-
-            try
+            //sets the player value boxes to previous values if a player file exists
+            if (File.Exists("bin/Debug/PlayerValues.dat"))
             {
-                sw = new StreamWriter("ToolValues.txt");
+                StreamReader sr = null;
+
+                try
+                {
+                    sr = new StreamReader("bin/Debug/PlayerValues.dat");
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error reading player file: " + ex.Message);
+                    return;
+                }
+
+                HealthBox.Text = sr.ReadLine();
+                SpeedBox.Text = sr.ReadLine();
+                JumpBox.Text = sr.ReadLine();
+
+                sr.Close();
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error instantiating stream: " + ex.Message);
-                return;
-            }
-
-            //Write wave values
-            sw.WriteLine("Wave Values"); //Header of section
-            sw.WriteLine(NumEnemiesBox.Text);
-            sw.WriteLine(OnScreenBox.Text);
-
-            //Write spawn chance values
-            sw.WriteLine("Spawn Chances"); //Header of section
-            sw.WriteLine(GroundChanceBox.Text);
-            sw.WriteLine(FlyerChanceBox.Text);
-            sw.WriteLine(SGroundChanceBox.Text);
-            sw.WriteLine(SFlyerChanceBox.Text);
-
-            //Write player values
-            sw.WriteLine("Player Values"); //Header of section
-            sw.WriteLine(HealthBox.Text);
-            sw.WriteLine(SpeedBox.Text);
-            sw.WriteLine(JumpBox.Text);
-
-            sw.Close(); //Close file
-
-            Application.Restart(); //Restarts the application (BUT DOES NOT CLOSE THE OLDER MONOGAME WINDOW)
-
         }
 
         /// <summary>
@@ -120,6 +78,108 @@ namespace Flip_Tank
             FlyerChanceBox.Text = rand.Next(MIN, MAX).ToString();
             SGroundChanceBox.Text = rand.Next(MIN, MAX).ToString();
             SFlyerChanceBox.Text = rand.Next(MIN, MAX).ToString();
+        }
+
+        /// <summary>
+        /// Deletes the directory and clears out all wave files, then creates a new directory
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            Directory.Delete("bin/Debug/WaveCache", true);
+
+            if (!Directory.Exists("bin/Debug/WaveCache"))
+                Directory.CreateDirectory("bin/Debug/WaveCache");
+        }
+
+        private void PlayerSave_Click(object sender, EventArgs e)
+        {
+            StreamWriter sw = null;
+
+            try
+            {
+                sw = new StreamWriter("bin/Debug/PlayerValues.dat");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error instantiating wave: " + ex.Message);
+                return;
+            }
+
+            //Set player values
+            sw.WriteLine(int.Parse(HealthBox.Text));
+            sw.WriteLine(int.Parse(SpeedBox.Text));
+            sw.WriteLine(int.Parse(JumpBox.Text));
+
+            sw.Close();
+        }
+
+        /// <summary>
+        /// Returns the Player Value Boxes to default values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DefaultPlayer_Click(object sender, EventArgs e)
+        {
+            HealthBox.Text = "100";
+            SpeedBox.Text = "3";
+            JumpBox.Text = "100";
+        }
+
+        /// <summary>
+        /// Takes the input values from the user, writes them to the ToolValues file and then restarts the game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            //Send player to main menu to restart
+
+            /*
+            TEXT FILE FORMAT:
+            
+            Number of Enemies
+            Number of Enemies on screen
+
+            Ground Chance
+            Flyer Chance
+            Shielded Ground Chance
+            Shielded Flyer Chance
+            
+            Health
+            Speed
+            Jump Height
+            */
+
+
+
+            //Get ready to write to file
+            StreamWriter sw = null;
+
+            try
+            {
+                sw = new StreamWriter("bin/Debug/WaveCache/Wave" + waveNum + ".dat");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error instantiating wave: " + ex.Message);
+                return;
+            }
+
+            //Write wave values
+            sw.WriteLine(int.Parse(NumEnemiesBox.Text));
+            sw.WriteLine(int.Parse(OnScreenBox.Text));
+
+            //Write spawn chance values
+            sw.WriteLine(int.Parse(GroundChanceBox.Text));
+            sw.WriteLine(int.Parse(FlyerChanceBox.Text));
+            sw.WriteLine(int.Parse(SGroundChanceBox.Text));
+            sw.WriteLine(int.Parse(SFlyerChanceBox.Text));
+
+            sw.Close();
+
+            waveNum++;
         }
     }
 }

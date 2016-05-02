@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Flip_Tank
 {
@@ -16,14 +17,28 @@ namespace Flip_Tank
         /// <param name="grndShld">percentage chance of spawning a shielded ground enemy</param>
         /// <param name="flyShld">percentage chance of spawning a shielded flyer enemy</param>
         /// <param name="onScreen">Number of enemies allowed to be active at a given time</param>
-        public Wave(int num, int ground, int flyer, int grndShld, int flyShld, int onScreen)
+        public Wave(Stream waveFile)
         {
-            this.num = num;
-            this.ground = ground;
-            this.flyer = flyer;
-            this.grndShld = grndShld;
-            this.flyShld = flyShld;
-            this.onScreen = onScreen;
+            StreamReader streamReader = new StreamReader(waveFile);
+
+            /*
+            TEXT FILE FORMAT:
+            
+            Number of Enemies
+            Number of Enemies on screen
+
+            Ground Chance
+            Flyer Chance
+            Shielded Ground Chance
+            Shielded Flyer Chance*/
+
+            num = int.Parse(streamReader.ReadLine());
+            onScreen = int.Parse(streamReader.ReadLine());
+            ground = int.Parse(streamReader.ReadLine());
+            flyer = int.Parse(streamReader.ReadLine());
+            grndShld = int.Parse(streamReader.ReadLine());
+            flyShld = int.Parse(streamReader.ReadLine());
+
             rng = new Random();
             activate = false;
            
