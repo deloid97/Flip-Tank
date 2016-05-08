@@ -87,12 +87,13 @@ namespace Flip_Tank
             }
         }
 
-        //Constructs a bullet with a location and a Y axis boundry that removes it when it goes over
-        public Bullet(Rectangle locRec, int bndryY)
+        //Constructs a bullet with a location, a Y axis boundry that removes it when it goes over, and a bullet speed
+        public Bullet(Rectangle locRec, int bndryY, int bSpeed)
         {
             location = locRec;
             IsActive = true;
             boundryY = bndryY;
+            bulletSpeed = bSpeed;
         }
 
 

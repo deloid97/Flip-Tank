@@ -11,6 +11,10 @@ namespace Flip_Tank
     /// </summary>
     public class Game1 : Game
     {
+        //Static variables for the Game window
+        public static int GAME_WIDTH;
+        public static int GAME_HEIGHT;
+
         Player p1 = new Player(0, 360, 70, 70); //creates player object
 
         enum GameState { Menu, InWave, Pause, EndWave, GameOver };
@@ -28,7 +32,7 @@ namespace Flip_Tank
         static List<PlayerBullet> playerBulletList = new List<PlayerBullet>();
         static List<Enemy> enemyList = new List<Enemy>(); //WILL CHANGE WHEN ENEMIES ARE IMPLEMENTED
 
-        //WILL BE USED IF GAME BEGINS TO HAVE MANY BULLETS AND MANY ENEMIES
+        //WILL BE USED IF GAME BEGINS TO HAVE TOO MANY BULLETS AND MANY ENEMIES
         Thread bulletThread;
 
         KeyboardState currState, prevState; //Holds the keyboard states
@@ -106,6 +110,10 @@ namespace Flip_Tank
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+
+            //Initalize public window variables
+            GAME_HEIGHT = GraphicsDevice.Viewport.Height;
+            GAME_WIDTH = GraphicsDevice.Viewport.Width;
 
             //Initalize KeyboardStates
             currState = Keyboard.GetState();
@@ -217,9 +225,9 @@ namespace Flip_Tank
                 {
                     p1.position.X = 0;
                 }
-                if (p1.position.X > GraphicsDevice.Viewport.Width - p1.position.Width)
+                if (p1.position.X > GAME_WIDTH - p1.position.Width)
                 {
-                    p1.position.X = GraphicsDevice.Viewport.Width - p1.position.Width;
+                    p1.position.X = GAME_WIDTH - p1.position.Width;
                 }
 
 
@@ -260,7 +268,7 @@ namespace Flip_Tank
             //Draw main menu
             if (gameState == GameState.Menu)
             {
-                spriteBatch.Draw(menu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.Draw(menu, new Rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT), Color.White);
             }
             else if (gameState == GameState.InWave)
             {
@@ -297,7 +305,7 @@ namespace Flip_Tank
             else if (gameState == GameState.GameOver)
             {
                 //Draw the GameOver screen
-                spriteBatch.Draw(gameOver, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.Draw(gameOver, new Rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT), Color.White);
 
                 //Draw restart text
                 spriteBatch.DrawString(mainFont, "Press enter to restart...", new Vector2(0, 0), Color.White);

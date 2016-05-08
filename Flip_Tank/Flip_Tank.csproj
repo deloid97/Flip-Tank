@@ -74,6 +74,9 @@
     <Content Include="Content\Bullet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\flyer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\GameOver.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

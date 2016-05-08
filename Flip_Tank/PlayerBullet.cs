@@ -10,8 +10,8 @@ namespace Flip_Tank
     class PlayerBullet : Bullet
     {
         float spinPos;
-        //Constructs a Player Bullet
-        public PlayerBullet(Rectangle locRec, int bndryY, float spin):base(locRec,bndryY)
+        //Constructs a Player Bullet (CHANGE PLAYER BULLET SPEED FROM HERE)
+        public PlayerBullet(Rectangle locRec, int bndryY, float spin):base(locRec,bndryY, 6)
         {
             spinPos = spin;
         }
@@ -62,7 +62,9 @@ namespace Flip_Tank
                     if (Location.Contains(currE.Position))
                     {
                         IsActive = false;
-                        //Something about destroying enemy when implemented
+
+                        //Destroy enemy
+                        currE.IsActive = false;
                     }
                 }
             }
