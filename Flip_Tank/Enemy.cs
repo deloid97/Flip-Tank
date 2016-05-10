@@ -106,8 +106,8 @@ namespace Flip_Tank
             }
         }
 
-        //Moves the enemy (DOES NOT MOVE THE BULLET POSITION! THIS MUST BE DONE IN A "NEW" MOVE METHOD FOR EACH ENEMY SINCE THEY SHOOT FROM DIFFERENT POSITIONS)
-        public void Move()
+        //Moves the enemy (DOES NOT MOVE THE BULLET POSITION! THIS MUST BE DONE IN AN OVERRIDEN MOVE METHOD FOR EACH ENEMY SINCE THEY SHOOT FROM DIFFERENT POSITIONS)
+        public virtual void Move()
         {
             //Move to the right if the orientation is normal
             if(orient == orientation.normal)

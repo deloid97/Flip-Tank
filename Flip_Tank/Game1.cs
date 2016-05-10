@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Threading;
+using System;
 
 namespace Flip_Tank
 {
@@ -26,6 +27,8 @@ namespace Flip_Tank
         Texture2D gameOver;
         Texture2D bullet;
 
+        Texture2D flyer;
+
         SpriteFont mainFont;
 
         static List<Bullet> bulletList = new List<Bullet>(); //WILL CHANGE WHEN ENEMIES ARE IMPLEMENTED
@@ -44,6 +47,7 @@ namespace Flip_Tank
 
         //Setting this value to true will enable developer mode in the game
         private const bool devMode = true;
+
         public static bool DEVMODE
         {
             get
@@ -145,6 +149,8 @@ namespace Flip_Tank
 
             bullet = Content.Load<Texture2D>("Bullet");
 
+            flyer = Content.Load<Texture2D>("flyer");
+
             menu = Content.Load<Texture2D>("MainMenu");
             pause = Content.Load<Texture2D>("pause");
             ground = Content.Load<Texture2D>("ground"); //gives ground texture
@@ -209,11 +215,17 @@ namespace Flip_Tank
                     gameState = GameState.Pause;
                 }
 
+                //Check for player movement
                 p1.Movement();
 
-                //Manage the bullets
+
+                //Move and Manage enemies and bullets
                 MoveBullets();
+                MoveEnemies();
+
                 BulletManage();
+                EnemyManage();
+                
 
                 /** Threading code to use if optimization needed
                 bulletThread = new Thread(BulletManage);
@@ -277,7 +289,7 @@ namespace Flip_Tank
                 p1.DrawHealth(spriteBatch); //Draws the health
                 spriteBatch.DrawString(mainFont, "Health", new Vector2(25, 420), Color.Black); //drawing font to overlap Health
 
-                //Enemy drawing (when implemented)
+                DrawEnemies();
 
                 DrawBullets();
 
@@ -320,7 +332,7 @@ namespace Flip_Tank
         /// Manages all the bullets and their collisions on screen as well as remove them from their list if they are inActive
         /// Does NOT move the bullets since that needs to be frame dependent and this can be on a different thread
         /// </summary>
-        public void BulletManage()
+        private void BulletManage()
         {
             //Manage enemy bullets
             if (BulletList.Count > 0)
@@ -364,6 +376,30 @@ namespace Flip_Tank
         }
 
         /// <summary>
+        /// Removes Enemies from the Enemy List if they are inactive and calls Shoot on active Enemies
+        /// </summary>
+        private void EnemyManage()
+        {
+            int count = EnemyList.Count;
+
+            for(int i = 0; i < count; i++)
+            {
+                Enemy currE = EnemyList[i];
+
+                if(!currE.IsActive)
+                {
+                    EnemyList.Remove(currE);
+                }
+                else
+                {
+                    currE.Shoot();
+                }
+
+                count = EnemyList.Count;
+            }
+        }
+
+        /// <summary>
         /// Called to increment all the bullets each frame
         /// </summary>
         private void MoveBullets()
@@ -387,6 +423,20 @@ namespace Flip_Tank
         }
 
         /// <summary>
+        /// Moves all the enemies in the enemy list
+        /// </summary>
+        private void MoveEnemies()
+        {
+            if(enemyList.Count > 0)
+            {
+               foreach(Enemy e in EnemyList)
+               {
+                    e.Move();
+               }     
+            }
+        }
+
+        /// <summary>
         /// Called to draw all the bullets each frame
         /// </summary>
         private void DrawBullets()
@@ -406,6 +456,28 @@ namespace Flip_Tank
                     currPB.Draw(spriteBatch, bullet);
                 }
             }
+        }
+
+        /// <summary>
+        /// Draws all the enemies in the enemy list
+        /// </summary>
+        private void DrawEnemies()
+        {
+            if(EnemyList.Count > 0)
+            {
+                foreach (Enemy e in EnemyList)
+                {
+                    if(e is Flyer)
+                    {
+                        e.Draw(spriteBatch, flyer);
+                    }
+                    else if(e is Ground)
+                    {
+                        //Draw with Ground enemy texture
+                    }
+                }
+            }
+
         }
     }
 }

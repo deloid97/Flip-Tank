@@ -117,7 +117,7 @@ namespace Flip_Tank
             {
                 isActive = false;
             }
-            else if (location.Contains(player.Position))
+            else if (location.Intersects(player.Position))
             {
                 isActive = false;
                 player.TakeDamage(Damage); 

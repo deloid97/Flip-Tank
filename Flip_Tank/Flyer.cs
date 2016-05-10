@@ -17,10 +17,15 @@ namespace Flip_Tank
         public Flyer() : base()
         {
             //Set up starting values for a flyer
-            Speed = 3;
+            Speed = 2;
+            ShotCoolDown = 60;
+
             orient = orientation.normal;
-            Position = new Rectangle(0, 0, 200, 34);
-            BulletPosition = new Rectangle(139, 22, 20, 20); //Most likely will change depending on how bullet looks
+
+
+            int scaleFactor = 6; //Used to determine how big Flyers are
+            Position = new Rectangle(0, 0, 600/scaleFactor, 268/scaleFactor);
+            BulletPosition = new Rectangle(448/6, 185/6, 20, 20);
 
             defaultBulletX = BulletPosition.X;
             defaultBulletY = BulletPosition.Y;
@@ -30,7 +35,9 @@ namespace Flip_Tank
             IsActive = true;
         }
 
-        public new void Move()
+
+        //Overriden Move to work with the flyer's bullets
+        public override void Move()
         {
             //Move the enemy generically first
             base.Move();

@@ -59,7 +59,7 @@ namespace Flip_Tank
             {
                 foreach(Enemy currE in enemies)
                 {
-                    if (Location.Contains(currE.Position))
+                    if (Location.Intersects(currE.Position))
                     {
                         IsActive = false;
 
