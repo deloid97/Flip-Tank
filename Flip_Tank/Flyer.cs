@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Flip_Tank
 {
@@ -13,6 +12,8 @@ namespace Flip_Tank
         //The default values for the bullet position of this enemy
         int defaultBulletX;
         int defaultBulletY;
+
+        int scaleFactor; //Scales the size of the Flyer down by this amount
 
         public Flyer() : base()
         {
@@ -23,9 +24,9 @@ namespace Flip_Tank
             orient = orientation.normal;
 
 
-            int scaleFactor = 6; //Used to determine how big Flyers are
+            scaleFactor = 6;
             Position = new Rectangle(0, 0, 600/scaleFactor, 268/scaleFactor);
-            BulletPosition = new Rectangle(448/6, 185/6, 20, 20);
+            BulletPosition = new Rectangle(448/6, 185/6, 10, 10);
 
             defaultBulletX = BulletPosition.X;
             defaultBulletY = BulletPosition.Y;

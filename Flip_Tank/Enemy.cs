@@ -123,7 +123,7 @@ namespace Flip_Tank
             }
             else
             {
-                position.X = position.X + speed;
+                position.X = position.X - speed;
 
                 //Check if the left boundry has been reached (with the entire texture about to leave the screen)
                 if(Position.X <= 0 - Position.Width)
@@ -134,7 +134,7 @@ namespace Flip_Tank
         }
 
         //Fires a bullet if the cool down has transpired (SHOULD BE CALLED ONCE A FRAME)
-        public void Shoot()
+        public virtual void Shoot()
         {
             //Fire if the cool down has been passed
             if(currCoolDown >= shotCoolDown)
@@ -152,6 +152,17 @@ namespace Flip_Tank
             }
         }
 
+        //Check if the player ran into the enemy, destroy this enemy, and deal damage to the player
+        public void PlayerContact(Player p)
+        {
+            if (Position.Intersects(p.Position))
+            {
+                p.TakeDamage(25);
+
+                IsActive = false;
+            }
+        }
+
         //Draws the enemy
         public void Draw(SpriteBatch spritebatch, Texture2D texture)
         {
@@ -162,7 +173,7 @@ namespace Flip_Tank
             }
             else
             {
-                spritebatch.Draw(texture, position, position, Color.White, 0.0f, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f);
+                spritebatch.Draw(texture, position, new Rectangle(0,0,texture.Width,texture.Height), Color.White, 0.0f, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0.0f);
             }
         } 
     }

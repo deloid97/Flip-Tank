@@ -28,6 +28,7 @@ namespace Flip_Tank
         Texture2D bullet;
 
         Texture2D flyer;
+        Texture2D groundEnemy;
 
         SpriteFont mainFont;
 
@@ -98,6 +99,19 @@ namespace Flip_Tank
             }
         }
 
+        internal Player P1
+        {
+            get
+            {
+                return p1;
+            }
+
+            set
+            {
+                p1 = value;
+            }
+        }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -123,6 +137,10 @@ namespace Flip_Tank
             currState = Keyboard.GetState();
             prevState = Keyboard.GetState();
 
+            //Test a flyer
+            enemyList.Add(new Flyer());
+            enemyList.Add(new Ground());
+
             //Starts the Developer Tool if game is in dev mode
             if (DEVMODE)
             {
@@ -141,15 +159,16 @@ namespace Flip_Tank
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            p1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
-            p1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
-            p1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
+            P1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
+            P1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
+            P1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
 
             mainFont = Content.Load<SpriteFont>("MainFont"); //loading the font
 
             bullet = Content.Load<Texture2D>("Bullet");
 
             flyer = Content.Load<Texture2D>("flyer");
+            groundEnemy = Content.Load<Texture2D>("groundEnemy");
 
             menu = Content.Load<Texture2D>("MainMenu");
             pause = Content.Load<Texture2D>("pause");
@@ -194,7 +213,7 @@ namespace Flip_Tank
             }
             else if (gameState == GameState.InWave)
             {
-                if (p1.Health <= 0)
+                if (P1.Health <= 0)
                 {
                     gameState = GameState.GameOver;
 
@@ -206,7 +225,7 @@ namespace Flip_Tank
                 //TEMPORARY: Test out GameOver. Kills player
                 if (currState.IsKeyUp(Keys.K) && prevState.IsKeyDown(Keys.K))
                 {
-                    p1.TakeDamage(100);
+                    P1.TakeDamage(100);
                 }
 
                 //Check if the player paused the game
@@ -216,7 +235,7 @@ namespace Flip_Tank
                 }
 
                 //Check for player movement
-                p1.Movement();
+                P1.Movement();
 
 
                 //Move and Manage enemies and bullets
@@ -233,13 +252,13 @@ namespace Flip_Tank
                 */
 
                 //keeps tank from moving past screen
-                if (p1.position.X < 0)
+                if (P1.position.X < 0)
                 {
-                    p1.position.X = 0;
+                    P1.position.X = 0;
                 }
-                if (p1.position.X > GAME_WIDTH - p1.position.Width)
+                if (P1.position.X > GAME_WIDTH - P1.position.Width)
                 {
-                    p1.position.X = GAME_WIDTH - p1.position.Width;
+                    P1.position.X = GAME_WIDTH - P1.position.Width;
                 }
 
 
@@ -257,7 +276,7 @@ namespace Flip_Tank
                 if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
                 {
                     //Reset player
-                    p1.Reset();
+                    P1.Reset();
                     gameState = GameState.InWave; //Go back to a new game
                 }
             }
@@ -284,13 +303,12 @@ namespace Flip_Tank
             }
             else if (gameState == GameState.InWave)
             {
-                spriteBatch.Draw(p1.playerTexture, p1.position, null, Color.White, p1.SpinPos, p1.Origin, SpriteEffects.None, 0); //draws player
+                spriteBatch.Draw(P1.playerTexture, P1.position, null, Color.White, P1.SpinPos, P1.Origin, SpriteEffects.None, 0); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
-                p1.DrawHealth(spriteBatch); //Draws the health
+                P1.DrawHealth(spriteBatch); //Draws the health
                 spriteBatch.DrawString(mainFont, "Health", new Vector2(25, 420), Color.Black); //drawing font to overlap Health
 
                 DrawEnemies();
-
                 DrawBullets();
 
                 //TEMPORARY controls drawing
@@ -307,9 +325,9 @@ namespace Flip_Tank
             else if (gameState == GameState.Pause)
             {
                 //Draw all the in-game stuff but it won't be updating
-                spriteBatch.Draw(p1.playerTexture, p1.position, null, Color.White, p1.SpinPos, p1.Origin, SpriteEffects.None, 0); //draws player
+                spriteBatch.Draw(P1.playerTexture, P1.position, null, Color.White, P1.SpinPos, P1.Origin, SpriteEffects.None, 0); //draws player
                 spriteBatch.Draw(ground, new Rectangle(0, 403, 840, 90), Color.White); //Draws ground
-                p1.DrawHealth(spriteBatch); //Draws the health
+                P1.DrawHealth(spriteBatch); //Draws the health
 
                 //Draw pause text
                 spriteBatch.Draw(pause, new Rectangle(275, 200, 250, 80), Color.White);
@@ -341,7 +359,7 @@ namespace Flip_Tank
                 for(int i = 0; i < count; i++)
                 {
                     Bullet currB = BulletList[i];
-                    currB.CheckCollision(p1);
+                    currB.CheckCollision(P1);
 
                     //Take the bullet out of the list if the collision check caused it to be inactive
                     if (!currB.IsActive)
@@ -385,6 +403,9 @@ namespace Flip_Tank
             for(int i = 0; i < count; i++)
             {
                 Enemy currE = EnemyList[i];
+
+                //Check if the player ran into this enemy
+                currE.PlayerContact(p1);
 
                 if(!currE.IsActive)
                 {
@@ -473,7 +494,7 @@ namespace Flip_Tank
                     }
                     else if(e is Ground)
                     {
-                        //Draw with Ground enemy texture
+                        e.Draw(spriteBatch, groundEnemy);
                     }
                 }
             }
