@@ -173,7 +173,7 @@ namespace Flip_Tank
             {
                 position.X = position.X + speed;
             }
-            if (currKState.IsKeyDown(Keys.Space))
+            if (currKState.IsKeyDown(Keys.W))
             {
                 if (hgt != height.air)
                 {
@@ -220,7 +220,7 @@ namespace Flip_Tank
 
 
             //Check if player shot
-            if(currMState.LeftButton == ButtonState.Released && prevMstate.LeftButton == ButtonState.Pressed)
+            if((currKState.IsKeyUp(Keys.Space) && prevKState.IsKeyDown(Keys.Space))||(currMState.LeftButton == ButtonState.Released && prevMstate.LeftButton == ButtonState.Pressed))
             {
                 Shoot();
             }

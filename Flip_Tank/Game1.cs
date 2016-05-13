@@ -18,13 +18,16 @@ namespace Flip_Tank
 
         Player p1 = new Player(0, 360, 70, 70); //creates player object
 
-        enum GameState { Menu, InWave, Pause, EndWave, GameOver };
+        enum GameState { Menu, Controls, InWave, Pause, EndWave, GameOver };
         GameState gameState;
 
-        Texture2D ground;
+        
         Texture2D menu;
+        Texture2D controls;
         Texture2D pause;
         Texture2D gameOver;
+
+        Texture2D ground;
         Texture2D bullet;
 
         Texture2D flyer;
@@ -129,6 +132,9 @@ namespace Flip_Tank
             // TODO: Add your initialization logic here
             base.Initialize();
 
+            //Initalize game state
+            gameState = GameState.Menu;
+
             //Initalize public window variables
             GAME_HEIGHT = GraphicsDevice.Viewport.Height;
             GAME_WIDTH = GraphicsDevice.Viewport.Width;
@@ -160,6 +166,7 @@ namespace Flip_Tank
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             P1.playerTexture = Content.Load<Texture2D>("Tank");   //gives player texture
+            ground = Content.Load<Texture2D>("ground"); //gives ground texture
             P1.bulletTexture = Content.Load<Texture2D>("Bullet"); //gives bullet texture
             P1.healthSegment = Content.Load<Texture2D>("HealthSegment"); //Gives health texture
 
@@ -172,7 +179,7 @@ namespace Flip_Tank
 
             menu = Content.Load<Texture2D>("MainMenu");
             pause = Content.Load<Texture2D>("pause");
-            ground = Content.Load<Texture2D>("ground"); //gives ground texture
+            controls = Content.Load<Texture2D>("Controls");
             gameOver = Content.Load<Texture2D>("GameOver");
 
             // TODO: use this.Content to load your game content here
@@ -206,11 +213,20 @@ namespace Flip_Tank
 
                 if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
                 {
-                    gameState = GameState.InWave;
+                    gameState = GameState.Controls;
                 }
 
                 prevState = currState; //Set previous state to last current state                
             }
+            //If the game is at the controls
+            else if (gameState == GameState.Controls)
+            {
+                if (currState.IsKeyUp(Keys.Enter) && prevState.IsKeyDown(Keys.Enter))
+                {
+                    gameState = GameState.InWave;
+                }
+            }
+            //If the game is playing
             else if (gameState == GameState.InWave)
             {
                 if (P1.Health <= 0)
@@ -300,6 +316,10 @@ namespace Flip_Tank
             if (gameState == GameState.Menu)
             {
                 spriteBatch.Draw(menu, new Rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT), Color.White);
+            }
+            else if (gameState == GameState.Controls)
+            {
+                spriteBatch.Draw(controls, new Rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT), Color.White);
             }
             else if (gameState == GameState.InWave)
             {
