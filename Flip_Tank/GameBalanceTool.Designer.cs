@@ -238,7 +238,7 @@
             // 
             // JumpBox
             // 
-            this.JumpBox.Location = new System.Drawing.Point(92, 93);
+            this.JumpBox.Location = new System.Drawing.Point(207, 96);
             this.JumpBox.Mask = "00000";
             this.JumpBox.Name = "JumpBox";
             this.JumpBox.Size = new System.Drawing.Size(100, 20);
@@ -269,12 +269,12 @@
             // LabelJump
             // 
             this.LabelJump.AutoSize = true;
-            this.LabelJump.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelJump.Location = new System.Drawing.Point(6, 97);
+            this.LabelJump.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelJump.Location = new System.Drawing.Point(0, 97);
             this.LabelJump.Name = "LabelJump";
-            this.LabelJump.Size = new System.Drawing.Size(83, 16);
+            this.LabelJump.Size = new System.Drawing.Size(207, 15);
             this.LabelJump.TabIndex = 4;
-            this.LabelJump.Text = "Jump Height";
+            this.LabelJump.Text = "Distance from to Origin to Flip Height";
             // 
             // LabelSpeed
             // 
