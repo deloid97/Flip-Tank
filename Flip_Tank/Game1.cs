@@ -17,6 +17,8 @@ namespace Flip_Tank
         public static int GAME_HEIGHT;
 
         Player p1 = new Player(0, 360, 70, 70); //creates player object
+        Wave wave1 = new Wave(); // create wave object
+        int waveNum = 0;
 
         enum GameState { Menu, Controls, InWave, Pause, EndWave, GameOver };
         GameState gameState;
@@ -143,16 +145,16 @@ namespace Flip_Tank
             currState = Keyboard.GetState();
             prevState = Keyboard.GetState();
 
-            //Test a flyer
-            enemyList.Add(new Flyer());
-            enemyList.Add(new Ground());
+            //Test an enemy
+            //enemyList.Add(new Flyer());
+            //enemyList.Add(new Ground());
 
             //Starts the Developer Tool if game is in dev mode
-            if (DEVMODE)
+            /*if (DEVMODE)
             {
                 GameBalanceTool gameBalance = new GameBalanceTool();
                 gameBalance.Show();
-            }
+            }*/
 
         }
 
@@ -249,7 +251,17 @@ namespace Flip_Tank
                 {
                     gameState = GameState.Pause;
                 }
-
+                // activate developer tool
+                if(currState.IsKeyUp(Keys.F1) && prevState.IsKeyDown(Keys.F1))
+                {
+                    GameBalanceTool gameBalance = new GameBalanceTool();
+                    gameBalance.Show();
+                }
+                if(enemyList.Count == 0)
+                {
+                    waveNum++;
+                    wave1.NewWave(waveNum);
+                }
                 //Check for player movement
                 P1.Movement();
 
