@@ -8,16 +8,24 @@ namespace Flip_Tank
 {
     class Wave
     {
+        //Constant ints for default values
+        const int FLY_CHANCE_DEFAULT = 50;
+        const int GROUND_CHANCE_DEFAULT = 50;
+        const int MAX_ENEMIES_ON_SCREEN_DEFAULT = 5;
+        const int ENEMY_NUM_DEFAULT = 3;
+
         // attributes
         int waveNumber;
+        int maxEnemiesOnScreen;
+
         Random rgen;
         double flyChance; // chance of spawning flyer enemy
         double grndChance; // chance of spawing ground enemy
         double totalChance; // stores the total chance to divide each by
-        int enemyNum;
+        int enemyNum; //Total number of enemies in this wave
         List<Enemy> enemyList;
 
-        StreamWriter writeWaveValues;
+        StreamReader sr;
         StreamReader readWaveValues;
 
         // properties
@@ -45,50 +53,116 @@ namespace Flip_Tank
             get { return enemyList; }
         }
 
+        public int MaxEnemiesOnScreen
+        {
+            get
+            {
+                return maxEnemiesOnScreen;
+            }
+        }
+
         // constructor
         public Wave()
         {
-            enemyList = new List<Enemy>();
-            waveNumber = 0;
-            rgen = new Random();
-            
-            flyChance = 50;
-            grndChance = 50;
+            //Read the custom wave file as the first wave if we are in Dev Mode
+            if(Game1.DEVMODE)
+            {
+                try
+                {
+                    sr = new StreamReader("CustomWave.txt");
 
-            writeWaveValues = new StreamWriter("CustomWave.txt");
-            writeWaveValues.WriteLine("3");
-            writeWaveValues.WriteLine(flyChance);
-            writeWaveValues.WriteLine(grndChance);
-            writeWaveValues.Close();
+                    int.TryParse(sr.ReadLine(), out enemyNum);
+                    int.TryParse(sr.ReadLine(), out maxEnemiesOnScreen);
+
+                    //Have to parse int to avoid error so use temporary ints to store variables meant for doubles
+                    int tempGrnd;
+                    int tempFly;
+
+                    int.TryParse(sr.ReadLine(), out tempGrnd);
+                    int.TryParse(sr.ReadLine(), out tempFly);
+
+                    //Convert temporary ints to doubles
+                    grndChance = (double)tempGrnd;
+                    flyChance = (double)tempFly;
+
+                    sr.Close();
+                }
+                catch (FileNotFoundException fnfe)
+                {
+                    Console.WriteLine("Error occured locating file:" + fnfe.Message);
+                }
+                catch (IOException ioe)
+                {
+                    Console.WriteLine("IO error: " + ioe.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error occured while reading file:" + e.Message);
+                }
+            }
+            else //If not in dev mode use current default values
+            {
+                enemyNum = ENEMY_NUM_DEFAULT;
+                flyChance = FLY_CHANCE_DEFAULT;
+                grndChance = GROUND_CHANCE_DEFAULT;
+            }
+
+            //SPECIAL CASE: If the file was attempted to be read and something went wrong
+            if(enemyNum == 0 || flyChance == 0 || grndChance == 0)
+            {
+                enemyNum = ENEMY_NUM_DEFAULT;
+                flyChance = FLY_CHANCE_DEFAULT;
+                grndChance = GROUND_CHANCE_DEFAULT;
+            }
+
+
+            //Initalize other wave variables
+            enemyList = new List<Enemy>();
+            waveNumber = 1;
+            rgen = new Random();
+
+            //Add first waves enemies to the list
+            for(int i = 0; i < enemyNum; i++)
+            {
+                AddEnemy();
+            }
         }
 
+        /* Not sure if this will be used
         public void NewWave(string waveFile) // this is a custom wave method
-        {
-            readWaveValues = new StreamReader("CustomWave.txt");
-            enemyNum = int.Parse(readWaveValues.ReadLine());
-            flyChance = int.Parse(readWaveValues.ReadLine());
-            grndChance = int.Parse(readWaveValues.ReadLine());
-            totalChance = flyChance + grndChance;
-            
+        {     
             // spawns in the specified number of enemies
             for(int i = 0; i < enemyNum; i++)
             {
-                SpawnEnemy();
+                AddEnemy();
             }
         }
+        */
         
-        public void NewWave(int waveNum) // this is the method for each wave
+        //Called by Game class to make a new wave when the last one is over
+        public void NewWave() // this is the method for each wave
         {
-            // set algorithym to spawn enemies
-            waveNumber = waveNum;
+           //Clear enemy list for new wave
+            enemyList.Clear();
 
-            // spawns 2 extra enemies per wave with the first one starting with 3 enemies
-            SpawnEnemy(); SpawnEnemy(); SpawnEnemy();
-            for(int i = 1; i < waveNumber; i++) { SpawnEnemy(); SpawnEnemy(); }
+            // spawns 2 extra enemies each time a new wave is made
+            enemyNum = enemyNum + 2;
+
+            //Add a number of enemies equal to enemyNum
+            for(int i = 0; i < enemyNum; i++) { AddEnemy(); }
+
+            //Every 10 waves increment the number of enemies allowed on screen
+            if((waveNumber + 1) % 10 == 0)
+            {
+                maxEnemiesOnScreen++;
+            }
+
+            //Increment the wave number
+            waveNumber++;
         }
 
         // spawns a specific type of enemy
-        public void SpawnEnemy(string type)
+        public void AddEnemy(string type)
         {
             if(type.ToLower() == "flyer")
             {
@@ -101,7 +175,7 @@ namespace Flip_Tank
         }
 
         // spawns a random enemy
-        public void SpawnEnemy()
+        public void AddEnemy()
         {
             // get percentages out of 100
             int spawnType = rgen.Next(100);

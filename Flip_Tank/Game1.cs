@@ -17,8 +17,12 @@ namespace Flip_Tank
         public static int GAME_HEIGHT;
 
         Player p1 = new Player(0, 360, 70, 70); //creates player object
-        Wave wave1 = new Wave(); // create wave object
-        int waveNum = 0;
+
+        //Wave variables
+        Wave currWave; // current wave object
+        int enemyIndex; //Index of enemy Games is to spawn next
+        int spawnCoolDown; //How many frames before the next enemy can be spawned
+        int currCoolDown; //How many frames it has been since the last enemy was spawned
 
         enum GameState { Menu, Controls, InWave, Pause, EndWave, GameOver };
         GameState gameState;
@@ -136,6 +140,8 @@ namespace Flip_Tank
 
             //Initalize game state
             gameState = GameState.Menu;
+            
+
 
             //Initalize public window variables
             GAME_HEIGHT = GraphicsDevice.Viewport.Height;
@@ -144,6 +150,13 @@ namespace Flip_Tank
             //Initalize KeyboardStates
             currState = Keyboard.GetState();
             prevState = Keyboard.GetState();
+
+
+            //Initialize first wave
+            currWave = new Wave();
+            spawnCoolDown = 240;
+            currCoolDown = spawnCoolDown; //Set current cool down to spawn cool down to start first wave
+            enemyIndex = 0;
 
             //Test an enemy
             //enemyList.Add(new Flyer());
@@ -257,14 +270,7 @@ namespace Flip_Tank
                     GameBalanceTool gameBalance = new GameBalanceTool();
                     gameBalance.Show();
                 }
-                // if all enemies destroyed spawn new wave
-                if(enemyList.Count == 0)
-                {
-                    waveNum++;
-                    wave1.NewWave(waveNum);
 
-                    enemyList = wave1.WaveList;
-                }
                 //Check for player movement
                 P1.Movement();
 
@@ -275,6 +281,9 @@ namespace Flip_Tank
 
                 BulletManage();
                 EnemyManage();
+
+                //Manage the wave
+                WaveManage();
                 
 
                 /** Threading code to use if optimization needed
@@ -308,6 +317,17 @@ namespace Flip_Tank
                 {
                     //Reset player
                     P1.Reset();
+
+                    //Clear all active items off screen
+                    bulletList.Clear();
+                    playerBulletList.Clear();
+                    enemyList.Clear();
+
+                    //Reset the wave
+                    currWave = new Wave();
+                    enemyIndex = 0;
+                    currCoolDown = spawnCoolDown;
+
                     gameState = GameState.InWave; //Go back to a new game
                 }
             }
@@ -346,6 +366,9 @@ namespace Flip_Tank
                 DrawEnemies();
                 DrawBullets();
 
+                //Draw what wave the player is on
+                spriteBatch.DrawString(mainFont, "Current Wave: " + currWave.WaveNumber, new Vector2(10, 10), Color.White);
+
 
 
             }
@@ -366,6 +389,9 @@ namespace Flip_Tank
 
                 //Draw restart text
                 spriteBatch.DrawString(mainFont, "Press enter to restart...", new Vector2(0, 0), Color.White);
+
+                //Draw what wave the player died on
+                spriteBatch.DrawString(mainFont, "Waves Survived: " + (currWave.WaveNumber - 1), new Vector2(10, GAME_HEIGHT/2), Color.White);
             }
 
             spriteBatch.End();
@@ -444,6 +470,35 @@ namespace Flip_Tank
                 }
 
                 count = EnemyList.Count;
+            }
+        }
+
+
+        /// <summary>
+        /// Manages the wave the player is on
+        /// </summary>
+        private void WaveManage()
+        {
+            //If the wave is over make a new wave and reset other wave variables
+            if(enemyIndex >= currWave.EnemyList.Count && enemyList.Count == 0)
+            {
+                currWave.NewWave();
+                currCoolDown = 0;
+                enemyIndex = 0;
+            }
+            //Wave isn't over but it's time to spawn an enemy
+            //i.e The cool down is over AND there are less enemies on screen than the max
+            else if(currCoolDown >= spawnCoolDown && enemyList.Count < currWave.MaxEnemiesOnScreen)
+            {
+                //Add enemy from wave's list (according to enemy index) to the game's list to spawn it
+                enemyList.Add(currWave.EnemyList[enemyIndex]);
+                enemyIndex++;
+                currCoolDown = 0;
+            }
+            //Wave is still going but it is not time to spawn
+            else
+            {
+                currCoolDown++;
             }
         }
 

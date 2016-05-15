@@ -253,6 +253,9 @@ namespace Flip_Tank
         {
             health = maxHealth;
             position = defaultPosition;
+            spinPos = 0;
+            hgt = height.ground;
+            move = state.sit;
         }
 
         //PRIVATE METHODS
@@ -346,44 +349,12 @@ namespace Flip_Tank
         StreamReader sr = null;
         try
         {
-            sr = new StreamReader("ToolValues.txt");
-            bool onSection = false; //Tells whether or not file is on the player section yet
-            int sectionLine = 0; //Line within the correct section
+                sr = new StreamReader("PlayerValues.txt");
 
-            while (true) //NOT AN INFINITE LOOP. Made so that the current line is reliable and no lines are skipped by calling ReadLine multiple times
-            {
-                string currString = sr.ReadLine();
-                if(currString != null)
-                {
-                      if (onSection)
-                      {
-                          sectionLine++;
-                       
-                          switch (sectionLine)
-                          {
-                              case 1:
-                                  maxHealth = int.Parse(currString);
-                                  break;
-                              case 2:
-                                  speed = int.Parse(currString);
-                                  break;
-                              case 3:
-                                  jumpHeight = int.Parse(currString);
-                                  break;
-                           }
-                      }
+                int.TryParse(sr.ReadLine(), out health);
+                int.TryParse(sr.ReadLine(), out speed);
+                int.TryParse(sr.ReadLine(), out jumpHeight);
 
-                      if (currString == "Player Values")
-                      {
-                          onSection = true;
-                      }
-               }
-              else
-              {
-                  break;
-              }
-          }
-               sr.Close();
         }
         catch (FileNotFoundException fnfe)
         {

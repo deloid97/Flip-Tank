@@ -33,15 +33,11 @@
             this.LabelOnScreen = new System.Windows.Forms.Label();
             this.LabelNumEnemy = new System.Windows.Forms.Label();
             this.NumEnemiesBox = new System.Windows.Forms.MaskedTextBox();
-            this.LabelShieldFlyer = new System.Windows.Forms.Label();
-            this.LabelShieldGround = new System.Windows.Forms.Label();
             this.LabelFlyer = new System.Windows.Forms.Label();
             this.LabelGround = new System.Windows.Forms.Label();
             this.EnemySpawnGroup = new System.Windows.Forms.GroupBox();
-            this.SFlyerChanceBox = new System.Windows.Forms.MaskedTextBox();
             this.FlyerChanceBox = new System.Windows.Forms.MaskedTextBox();
             this.GroundChanceBox = new System.Windows.Forms.MaskedTextBox();
-            this.SGroundChanceBox = new System.Windows.Forms.MaskedTextBox();
             this.RandSpawnButton = new System.Windows.Forms.Button();
             this.PlayerGroup = new System.Windows.Forms.GroupBox();
             this.JumpBox = new System.Windows.Forms.MaskedTextBox();
@@ -50,10 +46,10 @@
             this.LabelJump = new System.Windows.Forms.Label();
             this.LabelSpeed = new System.Windows.Forms.Label();
             this.LabelHealth = new System.Windows.Forms.Label();
-            this.ClearButton = new System.Windows.Forms.Button();
             this.PlayerSave = new System.Windows.Forms.Button();
             this.DefaultPlayer = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.ResetButton = new System.Windows.Forms.Button();
             this.WaveGroup.SuspendLayout();
             this.EnemySpawnGroup.SuspendLayout();
             this.PlayerGroup.SuspendLayout();
@@ -113,31 +109,11 @@
             this.NumEnemiesBox.Text = "0";
             this.NumEnemiesBox.ValidatingType = typeof(int);
             // 
-            // LabelShieldFlyer
-            // 
-            this.LabelShieldFlyer.AutoSize = true;
-            this.LabelShieldFlyer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelShieldFlyer.Location = new System.Drawing.Point(189, 90);
-            this.LabelShieldFlyer.Name = "LabelShieldFlyer";
-            this.LabelShieldFlyer.Size = new System.Drawing.Size(144, 16);
-            this.LabelShieldFlyer.TabIndex = 6;
-            this.LabelShieldFlyer.Text = "Shielded Flyer Chance";
-            // 
-            // LabelShieldGround
-            // 
-            this.LabelShieldGround.AutoSize = true;
-            this.LabelShieldGround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelShieldGround.Location = new System.Drawing.Point(3, 90);
-            this.LabelShieldGround.Name = "LabelShieldGround";
-            this.LabelShieldGround.Size = new System.Drawing.Size(158, 16);
-            this.LabelShieldGround.TabIndex = 4;
-            this.LabelShieldGround.Text = "Shielded Ground Chance";
-            // 
             // LabelFlyer
             // 
             this.LabelFlyer.AutoSize = true;
             this.LabelFlyer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelFlyer.Location = new System.Drawing.Point(189, 28);
+            this.LabelFlyer.Location = new System.Drawing.Point(6, 90);
             this.LabelFlyer.Name = "LabelFlyer";
             this.LabelFlyer.Size = new System.Drawing.Size(87, 16);
             this.LabelFlyer.TabIndex = 2;
@@ -155,34 +131,20 @@
             // 
             // EnemySpawnGroup
             // 
-            this.EnemySpawnGroup.Controls.Add(this.SFlyerChanceBox);
             this.EnemySpawnGroup.Controls.Add(this.FlyerChanceBox);
             this.EnemySpawnGroup.Controls.Add(this.GroundChanceBox);
-            this.EnemySpawnGroup.Controls.Add(this.SGroundChanceBox);
             this.EnemySpawnGroup.Controls.Add(this.LabelGround);
-            this.EnemySpawnGroup.Controls.Add(this.LabelShieldFlyer);
-            this.EnemySpawnGroup.Controls.Add(this.LabelShieldGround);
             this.EnemySpawnGroup.Controls.Add(this.LabelFlyer);
             this.EnemySpawnGroup.Location = new System.Drawing.Point(168, 5);
             this.EnemySpawnGroup.Name = "EnemySpawnGroup";
-            this.EnemySpawnGroup.Size = new System.Drawing.Size(346, 141);
+            this.EnemySpawnGroup.Size = new System.Drawing.Size(138, 141);
             this.EnemySpawnGroup.TabIndex = 1;
             this.EnemySpawnGroup.TabStop = false;
             this.EnemySpawnGroup.Text = "Enemy Spawn Chance";
             // 
-            // SFlyerChanceBox
-            // 
-            this.SFlyerChanceBox.Location = new System.Drawing.Point(192, 109);
-            this.SFlyerChanceBox.Mask = "00000";
-            this.SFlyerChanceBox.Name = "SFlyerChanceBox";
-            this.SFlyerChanceBox.Size = new System.Drawing.Size(100, 20);
-            this.SFlyerChanceBox.TabIndex = 7;
-            this.SFlyerChanceBox.Text = "0";
-            this.SFlyerChanceBox.ValidatingType = typeof(int);
-            // 
             // FlyerChanceBox
             // 
-            this.FlyerChanceBox.Location = new System.Drawing.Point(192, 47);
+            this.FlyerChanceBox.Location = new System.Drawing.Point(6, 109);
             this.FlyerChanceBox.Mask = "00000";
             this.FlyerChanceBox.Name = "FlyerChanceBox";
             this.FlyerChanceBox.Size = new System.Drawing.Size(100, 20);
@@ -200,22 +162,12 @@
             this.GroundChanceBox.Text = "0";
             this.GroundChanceBox.ValidatingType = typeof(int);
             // 
-            // SGroundChanceBox
-            // 
-            this.SGroundChanceBox.Location = new System.Drawing.Point(6, 109);
-            this.SGroundChanceBox.Mask = "00000";
-            this.SGroundChanceBox.Name = "SGroundChanceBox";
-            this.SGroundChanceBox.Size = new System.Drawing.Size(100, 20);
-            this.SGroundChanceBox.TabIndex = 5;
-            this.SGroundChanceBox.Text = "0";
-            this.SGroundChanceBox.ValidatingType = typeof(int);
-            // 
             // RandSpawnButton
             // 
             this.RandSpawnButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RandSpawnButton.Location = new System.Drawing.Point(360, 164);
+            this.RandSpawnButton.Location = new System.Drawing.Point(355, 89);
             this.RandSpawnButton.Name = "RandSpawnButton";
-            this.RandSpawnButton.Size = new System.Drawing.Size(114, 50);
+            this.RandSpawnButton.Size = new System.Drawing.Size(119, 57);
             this.RandSpawnButton.TabIndex = 3;
             this.RandSpawnButton.Text = "Randomize Spawn Chances";
             this.RandSpawnButton.UseVisualStyleBackColor = true;
@@ -229,7 +181,7 @@
             this.PlayerGroup.Controls.Add(this.LabelJump);
             this.PlayerGroup.Controls.Add(this.LabelSpeed);
             this.PlayerGroup.Controls.Add(this.LabelHealth);
-            this.PlayerGroup.Location = new System.Drawing.Point(12, 244);
+            this.PlayerGroup.Location = new System.Drawing.Point(12, 158);
             this.PlayerGroup.Name = "PlayerGroup";
             this.PlayerGroup.Size = new System.Drawing.Size(307, 136);
             this.PlayerGroup.TabIndex = 2;
@@ -296,34 +248,23 @@
             this.LabelHealth.TabIndex = 0;
             this.LabelHealth.Text = "Health";
             // 
-            // ClearButton
-            // 
-            this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClearButton.Location = new System.Drawing.Point(174, 164);
-            this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(119, 54);
-            this.ClearButton.TabIndex = 5;
-            this.ClearButton.Text = "Clear Directory";
-            this.ClearButton.UseVisualStyleBackColor = true;
-            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
-            // 
             // PlayerSave
             // 
             this.PlayerSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PlayerSave.Location = new System.Drawing.Point(360, 244);
+            this.PlayerSave.Location = new System.Drawing.Point(355, 174);
             this.PlayerSave.Name = "PlayerSave";
-            this.PlayerSave.Size = new System.Drawing.Size(114, 46);
+            this.PlayerSave.Size = new System.Drawing.Size(119, 46);
             this.PlayerSave.TabIndex = 6;
-            this.PlayerSave.Text = "Set New Player Values";
+            this.PlayerSave.Text = "Save New Player Values";
             this.PlayerSave.UseVisualStyleBackColor = true;
             this.PlayerSave.Click += new System.EventHandler(this.PlayerSave_Click);
             // 
             // DefaultPlayer
             // 
             this.DefaultPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DefaultPlayer.Location = new System.Drawing.Point(360, 307);
+            this.DefaultPlayer.Location = new System.Drawing.Point(355, 244);
             this.DefaultPlayer.Name = "DefaultPlayer";
-            this.DefaultPlayer.Size = new System.Drawing.Size(114, 50);
+            this.DefaultPlayer.Size = new System.Drawing.Size(119, 50);
             this.DefaultPlayer.TabIndex = 7;
             this.DefaultPlayer.Text = "Default Player Values";
             this.DefaultPlayer.UseVisualStyleBackColor = true;
@@ -332,7 +273,7 @@
             // SaveButton
             // 
             this.SaveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveButton.Location = new System.Drawing.Point(23, 164);
+            this.SaveButton.Location = new System.Drawing.Point(355, 5);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(119, 54);
             this.SaveButton.TabIndex = 8;
@@ -340,15 +281,26 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // ResetButton
+            // 
+            this.ResetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetButton.Location = new System.Drawing.Point(219, 326);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(113, 50);
+            this.ResetButton.TabIndex = 9;
+            this.ResetButton.Text = "Restart Game";
+            this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.RestartButton_Click);
+            // 
             // GameBalanceTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 388);
+            this.Controls.Add(this.ResetButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.DefaultPlayer);
             this.Controls.Add(this.PlayerSave);
-            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.PlayerGroup);
             this.Controls.Add(this.RandSpawnButton);
             this.Controls.Add(this.EnemySpawnGroup);
@@ -369,8 +321,6 @@
 
         #endregion
         private System.Windows.Forms.GroupBox WaveGroup;
-        private System.Windows.Forms.Label LabelShieldFlyer;
-        private System.Windows.Forms.Label LabelShieldGround;
         private System.Windows.Forms.Label LabelFlyer;
         private System.Windows.Forms.Label LabelGround;
         private System.Windows.Forms.Label LabelOnScreen;
@@ -378,8 +328,6 @@
         private System.Windows.Forms.GroupBox EnemySpawnGroup;
         private System.Windows.Forms.Button RandSpawnButton;
         private System.Windows.Forms.GroupBox PlayerGroup;
-        private System.Windows.Forms.MaskedTextBox SGroundChanceBox;
-        private System.Windows.Forms.MaskedTextBox SFlyerChanceBox;
         private System.Windows.Forms.MaskedTextBox FlyerChanceBox;
         private System.Windows.Forms.MaskedTextBox GroundChanceBox;
         private System.Windows.Forms.MaskedTextBox OnScreenBox;
@@ -390,9 +338,9 @@
         private System.Windows.Forms.Label LabelJump;
         private System.Windows.Forms.Label LabelSpeed;
         private System.Windows.Forms.Label LabelHealth;
-        private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.Button PlayerSave;
         private System.Windows.Forms.Button DefaultPlayer;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button ResetButton;
     }
 }

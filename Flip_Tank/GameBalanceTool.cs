@@ -18,7 +18,6 @@ namespace Flip_Tank
     public partial class GameBalanceTool : Form
     {
         Random rand; //Random to be used for randomizing spawn chances
-        int waveNum; //integer to increment with each wave creation.  For use with creating file names
 
         public GameBalanceTool()
         {
@@ -33,20 +32,15 @@ namespace Flip_Tank
             WaveGroup.TabStop = true;
             EnemySpawnGroup.TabStop = true;
             PlayerGroup.TabStop = true;
-            waveNum = 0;
-
-            //creates a directory for the waves files if none exists
-            if (!Directory.Exists("bin/Debug/WaveCache"))
-                Directory.CreateDirectory("bin/Debug/WaveCache");
 
             //sets the player value boxes to previous values if a player file exists
-            if (File.Exists("bin/Debug/PlayerValues.dat"))
+            if (File.Exists("PlayerValues.txt"))
             {
                 StreamReader sr = null;
 
                 try
                 {
-                    sr = new StreamReader("bin/Debug/PlayerValues.dat");
+                    sr = new StreamReader("PlayerValues.txt");
                 }
                 catch(Exception ex)
                 {
@@ -76,44 +70,34 @@ namespace Flip_Tank
             //Set new values
             GroundChanceBox.Text = rand.Next(MIN, MAX).ToString();
             FlyerChanceBox.Text = rand.Next(MIN, MAX).ToString();
-            SGroundChanceBox.Text = rand.Next(MIN, MAX).ToString();
-            SFlyerChanceBox.Text = rand.Next(MIN, MAX).ToString();
-
-            // set the new values into the wave
-            //***code goes here***
-        }
-
-        /// <summary>
-        /// Deletes the directory and clears out all wave files, then creates a new directory
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ClearButton_Click(object sender, EventArgs e)
-        {
-            Directory.Delete("bin/Debug/WaveCache", true);
-
-            if (!Directory.Exists("bin/Debug/WaveCache"))
-                Directory.CreateDirectory("bin/Debug/WaveCache");
         }
 
         private void PlayerSave_Click(object sender, EventArgs e)
         {
+            /*
+            TEXT FILE FORMAT:
+
+            Health
+            Speed
+            Jump
+            */
+
             StreamWriter sw = null;
 
             try
             {
-                sw = new StreamWriter("bin/Debug/PlayerValues.dat");
+                sw = new StreamWriter("PlayerValues.txt");
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error instantiating wave: " + ex.Message);
+                Console.WriteLine("Error saving player values: " + ex.Message);
                 return;
             }
 
-            //Set player values
-            sw.WriteLine(int.Parse(HealthBox.Text));
-            sw.WriteLine(int.Parse(SpeedBox.Text));
-            sw.WriteLine(int.Parse(JumpBox.Text));
+            //Write player values
+            sw.WriteLine(HealthBox.Text);
+            sw.WriteLine(SpeedBox.Text);
+            sw.WriteLine(JumpBox.Text);
 
             sw.Close();
         }
@@ -137,7 +121,6 @@ namespace Flip_Tank
         /// <param name="e"></param>
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            //Send player to main menu to restart
 
             /*
             TEXT FILE FORMAT:
@@ -147,22 +130,14 @@ namespace Flip_Tank
 
             Ground Chance
             Flyer Chance
-            Shielded Ground Chance
-            Shielded Flyer Chance
-            
-            Health
-            Speed
-            Jump Height
             */
-
-
 
             //Get ready to write to file
             StreamWriter sw = null;
 
             try
             {
-                sw = new StreamWriter("bin/Debug/WaveCache/Wave" + waveNum + ".dat");
+                sw = new StreamWriter("CustomWave.txt");
             }
             catch (Exception ex)
             {
@@ -170,19 +145,22 @@ namespace Flip_Tank
                 return;
             }
 
-            //Write wave values
-            sw.WriteLine(int.Parse(NumEnemiesBox.Text));
-            sw.WriteLine(int.Parse(OnScreenBox.Text));
+            //Write general wave values
+            sw.WriteLine(NumEnemiesBox.Text);
+            sw.WriteLine(OnScreenBox.Text);
 
             //Write spawn chance values
-            sw.WriteLine(int.Parse(GroundChanceBox.Text));
-            sw.WriteLine(int.Parse(FlyerChanceBox.Text));
-            sw.WriteLine(int.Parse(SGroundChanceBox.Text));
-            sw.WriteLine(int.Parse(SFlyerChanceBox.Text));
+            sw.WriteLine(GroundChanceBox.Text);
+            sw.WriteLine(FlyerChanceBox.Text);
 
             sw.Close();
+        }
 
-            waveNum++;
+
+        //Restarts the game
+        private void RestartButton_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }
