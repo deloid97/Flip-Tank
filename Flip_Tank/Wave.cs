@@ -85,6 +85,8 @@ namespace Flip_Tank
                     grndChance = (double)tempGrnd;
                     flyChance = (double)tempFly;
 
+                    totalChance = flyChance + grndChance;
+
                     sr.Close();
                 }
                 catch (FileNotFoundException fnfe)
@@ -105,6 +107,7 @@ namespace Flip_Tank
                 enemyNum = ENEMY_NUM_DEFAULT;
                 flyChance = FLY_CHANCE_DEFAULT;
                 grndChance = GROUND_CHANCE_DEFAULT;
+                totalChance = flyChance + grndChance;
             }
 
             //SPECIAL CASE: If the file was attempted to be read and something went wrong
@@ -113,6 +116,7 @@ namespace Flip_Tank
                 enemyNum = ENEMY_NUM_DEFAULT;
                 flyChance = FLY_CHANCE_DEFAULT;
                 grndChance = GROUND_CHANCE_DEFAULT;
+                totalChance = flyChance + grndChance;
             }
 
 
