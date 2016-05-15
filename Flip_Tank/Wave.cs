@@ -9,14 +9,16 @@ namespace Flip_Tank
     class Wave
     {
         // attributes
-        List<Enemy> waveList;
         int waveNumber;
         Random rgen;
         double flyChance; // chance of spawning flyer enemy
         double grndChance; // chance of spawing ground enemy
         double totalChance; // stores the total chance to divide each by
+        int enemyNum;
+        List<Enemy> enemyList;
 
-        StreamWriter waveValues;
+        StreamWriter writeWaveValues;
+        StreamReader readWaveValues;
 
         // properties
         public double FlyChance
@@ -33,38 +35,39 @@ namespace Flip_Tank
             set { grndChance = value; totalChance = flyChance + grndChance; }
         }
 
-        public List<Enemy> WaveList
-        {
-            get { return waveList; }
-        }
-
         public int WaveNumber
         {
             get { return waveNumber; }
         }
 
+        public List<Enemy> EnemyList
+        {
+            get { return enemyList; }
+        }
+
         // constructor
         public Wave()
         {
+            enemyList = new List<Enemy>();
             waveNumber = 0;
             rgen = new Random();
-            waveList = new List<Enemy>();
-
             
             flyChance = 50;
             grndChance = 50;
 
-            waveValues = new StreamWriter("CustomWave.txt");
-            waveValues.WriteLine("3");
-            waveValues.WriteLine(flyChance);
-            waveValues.WriteLine(grndChance);
+            writeWaveValues = new StreamWriter("CustomWave.txt");
+            writeWaveValues.WriteLine("3");
+            writeWaveValues.WriteLine(flyChance);
+            writeWaveValues.WriteLine(grndChance);
+            writeWaveValues.Close();
         }
 
-        public void NewWave(int enemyNum, double flyChn, double grndChn) // this is a custom wave method
+        public void NewWave(string waveFile) // this is a custom wave method
         {
-            waveList.Clear();
-            flyChance = flyChn;
-            grndChance = grndChn;
+            readWaveValues = new StreamReader("CustomWave.txt");
+            enemyNum = int.Parse(readWaveValues.ReadLine());
+            flyChance = int.Parse(readWaveValues.ReadLine());
+            grndChance = int.Parse(readWaveValues.ReadLine());
             totalChance = flyChance + grndChance;
             
             // spawns in the specified number of enemies
@@ -77,7 +80,6 @@ namespace Flip_Tank
         public void NewWave(int waveNum) // this is the method for each wave
         {
             // set algorithym to spawn enemies
-            WaveList.Clear();
             waveNumber = waveNum;
 
             // spawns 2 extra enemies per wave with the first one starting with 3 enemies
@@ -90,11 +92,11 @@ namespace Flip_Tank
         {
             if(type.ToLower() == "flyer")
             {
-                waveList.Add(new Flyer());
+                enemyList.Add(new Flyer());
             }
             if (type.ToLower() == "ground")
             {
-                waveList.Add(new Ground());
+                enemyList.Add(new Ground());
             }
         }
 
@@ -109,11 +111,11 @@ namespace Flip_Tank
             // spawn an enemy depending on the on the rgen result
             if(spawnType >= 0 && spawnType < trueFC)
             {
-                waveList.Add(new Flyer());
+                enemyList.Add(new Flyer());
             }
             if(spawnType >= trueFC && spawnType < trueFC + trueGC)
             {
-                waveList.Add(new Ground());
+                enemyList.Add(new Ground());
             }
         }
     }
