@@ -331,14 +331,6 @@ namespace Flip_Tank
                 DrawEnemies();
                 DrawBullets();
 
-                //TEMPORARY controls drawing
-                spriteBatch.DrawString(mainFont, "Controls (Placed here for demo only):", new Vector2(0, 0), Color.Black);
-                spriteBatch.DrawString(mainFont, "A/D: Move", new Vector2(0, 20), Color.Black);
-                spriteBatch.DrawString(mainFont, "Space: Jump", new Vector2(0, 40), Color.Black);
-                spriteBatch.DrawString(mainFont, "Left Mouse: Shoot", new Vector2(0, 60), Color.Black);
-                spriteBatch.DrawString(mainFont, "P: Pause", new Vector2(0, 80), Color.Black);
-                spriteBatch.DrawString(mainFont, "K: Temp. End Game", new Vector2(0, 100), Color.Black);
-
 
 
             }
