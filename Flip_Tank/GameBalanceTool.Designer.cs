@@ -75,7 +75,7 @@
             this.OnScreenBox.Name = "OnScreenBox";
             this.OnScreenBox.Size = new System.Drawing.Size(100, 20);
             this.OnScreenBox.TabIndex = 3;
-            this.OnScreenBox.Text = "0";
+            this.OnScreenBox.Text = "5";
             this.OnScreenBox.ValidatingType = typeof(int);
             // 
             // LabelOnScreen
@@ -106,7 +106,7 @@
             this.NumEnemiesBox.Name = "NumEnemiesBox";
             this.NumEnemiesBox.Size = new System.Drawing.Size(100, 20);
             this.NumEnemiesBox.TabIndex = 1;
-            this.NumEnemiesBox.Text = "0";
+            this.NumEnemiesBox.Text = "3";
             this.NumEnemiesBox.ValidatingType = typeof(int);
             // 
             // LabelFlyer
@@ -149,7 +149,7 @@
             this.FlyerChanceBox.Name = "FlyerChanceBox";
             this.FlyerChanceBox.Size = new System.Drawing.Size(100, 20);
             this.FlyerChanceBox.TabIndex = 3;
-            this.FlyerChanceBox.Text = "0";
+            this.FlyerChanceBox.Text = "50";
             this.FlyerChanceBox.ValidatingType = typeof(int);
             // 
             // GroundChanceBox
@@ -159,7 +159,7 @@
             this.GroundChanceBox.Name = "GroundChanceBox";
             this.GroundChanceBox.Size = new System.Drawing.Size(100, 20);
             this.GroundChanceBox.TabIndex = 1;
-            this.GroundChanceBox.Text = "0";
+            this.GroundChanceBox.Text = "50";
             this.GroundChanceBox.ValidatingType = typeof(int);
             // 
             // RandSpawnButton
