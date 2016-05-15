@@ -257,10 +257,13 @@ namespace Flip_Tank
                     GameBalanceTool gameBalance = new GameBalanceTool();
                     gameBalance.Show();
                 }
+                // if all enemies destroyed spawn new wave
                 if(enemyList.Count == 0)
                 {
                     waveNum++;
                     wave1.NewWave(waveNum);
+
+                    enemyList = wave1.WaveList;
                 }
                 //Check for player movement
                 P1.Movement();
