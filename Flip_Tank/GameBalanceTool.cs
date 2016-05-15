@@ -78,6 +78,9 @@ namespace Flip_Tank
             FlyerChanceBox.Text = rand.Next(MIN, MAX).ToString();
             SGroundChanceBox.Text = rand.Next(MIN, MAX).ToString();
             SFlyerChanceBox.Text = rand.Next(MIN, MAX).ToString();
+
+            // set the new values into the wave
+            //***code goes here***
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Flip_Tank
     {
         // attributes
         List<Enemy> waveList;
-        int wave;
+        int waveNumber;
         Random rgen;
         double flyChance; // chance of spawning flyer enemy
         double grndChance; // chance of spawing ground enemy
@@ -51,9 +51,15 @@ namespace Flip_Tank
             get { return waveList; }
         }
 
+        public int WaveNumber
+        {
+            get { return waveNumber; }
+        }
+
+        // constructor
         public Wave()
         {
-            wave = 0;
+            waveNumber = 0;
             rgen = new Random();
             waveList = new List<Enemy>();
 
@@ -63,9 +69,31 @@ namespace Flip_Tank
             grndShldChance = 25;
         }
 
-        public void NewWave(int waveNum, int enemyNum, double flyChn, double grndChn, double flyShldChn, double grndShldChn)
+        public void NewWave(int enemyNum, double flyChn, double grndChn, double flyShldChn, double grndShldChn) // this is a custom wave method
         {
+            waveList.Clear();
+            flyChance = flyChn;
+            grndChance = grndChn;
+            flyShldChance = flyShldChn;
+            grndShldChance = grndShldChn;
+            totalChance = flyChance + grndChance + flyShldChance + grndShldChance;
+            
+            // spawns in the specified number of enemies
+            for(int i = 0; i < enemyNum; i++)
+            {
+                SpawnEnemy();
+            }
+        }
+        
+        public void NewWave(int waveNum) // this is the method for each wave
+        {
+            // set algorithym to spawn enemies
+            WaveList.Clear();
+            waveNumber = waveNum;
 
+            // spawns 2 extra enemies per wave with the first one starting with 3 enemies
+            SpawnEnemy(); SpawnEnemy(); SpawnEnemy();
+            for(int i = 1; i < waveNumber; i++) { SpawnEnemy(); SpawnEnemy(); }
         }
 
         // spawns a specific type of enemy
@@ -92,12 +120,14 @@ namespace Flip_Tank
         // spawns a random enemy
         public void SpawnEnemy()
         {
+            // get percentages out of 100
             int spawnType = rgen.Next(100);
             double trueFC = flyChance / totalChance * 100;
             double trueGC = grndChance / totalChance * 100;
             double trueFSC = flyShldChance / totalChance * 100;
             double trueGSC = grndShldChance / totalChance * 100;
 
+            // spawn an enemy depending on the on the rgen result
             if(spawnType >= 0 && spawnType < trueFC)
             {
                 waveList.Add(new Flyer());
