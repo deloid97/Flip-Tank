@@ -157,7 +157,7 @@ namespace Flip_Tank
         {
             if (Position.Intersects(p.Position))
             {
-                p.TakeDamage(25);
+                p.TakeDamage(20);
 
                 IsActive = false;
             }

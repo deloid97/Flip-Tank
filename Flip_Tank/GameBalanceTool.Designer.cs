@@ -195,7 +195,7 @@
             this.JumpBox.Name = "JumpBox";
             this.JumpBox.Size = new System.Drawing.Size(100, 20);
             this.JumpBox.TabIndex = 5;
-            this.JumpBox.Text = "100";
+            this.JumpBox.Text = "150";
             this.JumpBox.ValidatingType = typeof(int);
             // 
             // SpeedBox
@@ -205,7 +205,7 @@
             this.SpeedBox.Name = "SpeedBox";
             this.SpeedBox.Size = new System.Drawing.Size(100, 20);
             this.SpeedBox.TabIndex = 3;
-            this.SpeedBox.Text = "3";
+            this.SpeedBox.Text = "6";
             this.SpeedBox.ValidatingType = typeof(int);
             // 
             // HealthBox

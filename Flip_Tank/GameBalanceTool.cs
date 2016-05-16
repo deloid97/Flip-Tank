@@ -110,8 +110,8 @@ namespace Flip_Tank
         private void DefaultPlayer_Click(object sender, EventArgs e)
         {
             HealthBox.Text = "100";
-            SpeedBox.Text = "3";
-            JumpBox.Text = "100";
+            SpeedBox.Text = "6";
+            JumpBox.Text = "150";
         }
 
         /// <summary>

@@ -45,6 +45,7 @@ namespace Flip_Tank
         Vector2 tankOrigin;
         float spinPos;
         bool spinOnce;
+        double spinSpeed;
 
         //Movement States
         enum state {sit, jump, fall};   //players current action
@@ -122,9 +123,12 @@ namespace Flip_Tank
 
             //Current default values
             speed = 6;
-            jumpHeight = 100;
+            jumpHeight = 150;
             maxJumpSpeed = 7;
             maxHealth = 100;
+
+            //Set spin speed
+            spinSpeed = 1.2;
 
             health = maxHealth; //Set health to whatever the max is to start
 
@@ -184,7 +188,7 @@ namespace Flip_Tank
             }
             if(hgt == height.air && !spinOnce)
             {
-                spinPos += ((float)((/*speed of spin goes here*/1.1) * 2.0 * Math.PI)) / 100f;
+                spinPos += ((float)((spinSpeed) * 2.0 * Math.PI)) / 100f;
                 if(spinPos > (2*Math.PI))
                 {
                     spinOnce = true;

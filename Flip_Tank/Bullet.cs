@@ -13,7 +13,7 @@ namespace Flip_Tank
 
         //Can change all general bullets' stats from here
         int bulletSpeed = 6;
-        int damage = 25; 
+        int damage = 20; 
         bool isActive; //Tells whether or not the bullet is currently active flying through the air
         int boundryY;
 
