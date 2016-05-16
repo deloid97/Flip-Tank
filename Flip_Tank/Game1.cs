@@ -16,7 +16,7 @@ namespace Flip_Tank
         public static int GAME_WIDTH;
         public static int GAME_HEIGHT;
 
-        Player p1 = new Player(0, 360, 70, 70); //creates player object
+        Player p1 = new Player(0, 352, 70, 70); //creates player object
 
         //Wave variables
         Wave currWave; // current wave object
