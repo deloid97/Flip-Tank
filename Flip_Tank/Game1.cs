@@ -487,8 +487,8 @@ namespace Flip_Tank
                 enemyIndex = 0;
             }
             //Wave isn't over but it's time to spawn an enemy
-            //i.e The cool down is over AND there are less enemies on screen than the max
-            else if(currCoolDown >= spawnCoolDown && enemyList.Count < currWave.MaxEnemiesOnScreen)
+            //i.e The cool down is over AND there are less enemies on screen than the max AND there is still some enemy in the wave list to spawn
+            else if(currCoolDown >= spawnCoolDown && enemyList.Count < currWave.MaxEnemiesOnScreen && enemyIndex < currWave.EnemyList.Count)
             {
                 //Add enemy from wave's list (according to enemy index) to the game's list to spawn it
                 enemyList.Add(currWave.EnemyList[enemyIndex]);
