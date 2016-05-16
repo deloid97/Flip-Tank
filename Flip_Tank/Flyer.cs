@@ -18,7 +18,7 @@ namespace Flip_Tank
         public Flyer() : base()
         {
             //Set up starting values for a flyer
-            Speed = 2;
+            Speed = 4;
             ShotCoolDown = 60;
 
             orient = orientation.normal;
@@ -31,7 +31,7 @@ namespace Flip_Tank
             defaultBulletX = BulletPosition.X;
             defaultBulletY = BulletPosition.Y;
 
-            BulletSpeed = 4;
+            BulletSpeed = 6;
 
             IsActive = true;
         }

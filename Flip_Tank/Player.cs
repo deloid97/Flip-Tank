@@ -37,7 +37,7 @@ namespace Flip_Tank
 
         //Falling
         int groundHeight; //Height when player is sitting on ground
-        const double gravAcceleration = 0.1; //Acceleration due to virtual gravity
+        const double gravAcceleration = 0.2; //Acceleration due to virtual gravity
         int fallSpeed; //Current falling speed to be increased by gravity
         int framesFalling; //Number of frames player has been falling
 
@@ -121,9 +121,9 @@ namespace Flip_Tank
             tankOrigin = new Vector2(width, height); // set spin axis to center of the tank
 
             //Current default values
-            speed = 2;
+            speed = 6;
             jumpHeight = 100;
-            maxJumpSpeed = 6;
+            maxJumpSpeed = 7;
             maxHealth = 100;
 
             health = maxHealth; //Set health to whatever the max is to start
@@ -184,7 +184,7 @@ namespace Flip_Tank
             }
             if(hgt == height.air && !spinOnce)
             {
-                spinPos += ((float)((/*speed of spin goes here*/1) * 2 * Math.PI)) / 100f;
+                spinPos += ((float)((/*speed of spin goes here*/1.1) * 2.0 * Math.PI)) / 100f;
                 if(spinPos > (2*Math.PI))
                 {
                     spinOnce = true;

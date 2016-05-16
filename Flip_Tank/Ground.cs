@@ -18,7 +18,7 @@ namespace Flip_Tank
         public Ground() : base()
         {
             //Set up starting values for a ground enemy
-            Speed = 1;
+            Speed = 3;
 
             //Start flipped since it spawns from the right side of the screen
             orient = orientation.flipped;
