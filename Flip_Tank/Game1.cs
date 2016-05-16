@@ -154,7 +154,7 @@ namespace Flip_Tank
 
             //Initialize first wave
             currWave = new Wave();
-            spawnCoolDown = 240;
+            spawnCoolDown = 120;
             currCoolDown = spawnCoolDown; //Set current cool down to spawn cool down to start first wave
             enemyIndex = 0;
 
@@ -251,12 +251,6 @@ namespace Flip_Tank
                     //Clear out the bullets
                     BulletList.Clear();
                     PlayerBulletList.Clear();
-                }
-
-                //TEMPORARY: Test out GameOver. Kills player
-                if (currState.IsKeyUp(Keys.K) && prevState.IsKeyDown(Keys.K))
-                {
-                    P1.TakeDamage(100);
                 }
 
                 //Check if the player paused the game
